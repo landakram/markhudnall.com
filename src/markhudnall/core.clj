@@ -66,6 +66,7 @@
    [:ul
     [:li [:a {:href "https://getclef.com"} "Clef"] " is a better way to log in online"]
     [:li [:a {:href ""} "Kiwi"] " is a personal wiki you write in Markdown"]
+    [:li [:a {:href "http://www.meetup.com/east-bay-mobile-hack-night/"} "East Bay Mobile Hack Night"] " is a mobile project meetup I host in downtown Oakland"]
     ]]) 
 
 (defn front-page [posts]
@@ -80,12 +81,12 @@
 
 
 (defn post-pages [posts]
-  (let [post-pairs (map #(vector (get-in % [:metadata :permalink]) (:html %)) posts)
+  (let [post-pairs (map #(vector (get-in % [:metadata :permalink]) %) posts)
         post-map (into {} post-pairs)]
     (zipmap (keys post-map)
             (map 
               #(fn [req] 
-                  (layout/layout-page req %))
+                  (layout/layout-post req %))
               (vals post-map)))))
 
 (defn get-raw-pages []

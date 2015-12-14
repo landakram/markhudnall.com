@@ -32,6 +32,7 @@ div.body {
 
 div.content {
     padding: 2em;
+    margin-bottom: 5em;
 
     background: white;
     -webkit-border-radius: 5px;
@@ -94,4 +95,14 @@ pre {
 .emoji {
     width: 1em;
     height: 1em;
+}
+
+.post-title {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.post-date {
+    color: #C3C3C3;
+    display: block;
+    font-style: italic;
 }

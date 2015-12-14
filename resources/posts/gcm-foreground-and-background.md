@@ -2,8 +2,6 @@ Title: Handling GCM messages in the foreground and background
 Author: Mark Hudnall
 Date: 2013-11-13
 
-# Handling GCM messages in the foreground and background
-
 When the [Clef](https://getclef.com) Android app gets notifications, we want it to behave differently when it's open and in the foreground than when it's in the background.
 
 This is a surprisingly difficult thing to do, since it's actually quite difficult to determine whether an app is in the background. You can use a static boolean or keep track of the shown activity (maybe in a custom `Application` class or another singleton), but that isn't always reliable. You might also have other requirements—what if you want to differentiate behavior based on which activity is in the foreground?

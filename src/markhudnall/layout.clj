@@ -1,6 +1,7 @@
 (ns markhudnall.layout
   (:require [hiccup.page :refer [html5 include-js include-css]]
             [optimus.link :as link]
+            [clj-time.format :as f]
             ))
 
 (defn fonts []
@@ -28,6 +29,18 @@
         [:li
           [:a {:href "http://wwww.google.com"} "Archive"]]
         ]]])
+
+(defn layout-post [request post]
+  (let [date (get-in post [:metadata :date])
+        title (get-in post [:metadata :title])
+        formatted-date (f/unparse (f/formatter "MMMM d, YYYY") date)
+        content (:html post)]
+    (layout-page 
+      request 
+      [:div
+        [:h1.post-title title]
+        [:time.post-date formatted-date]
+        content])))
 
 (defn layout-page [request page]
   (html5

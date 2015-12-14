@@ -3,5 +3,5 @@ Hi, I'm Mark :wave:. I'm a technology enthusiast and CTO at [Clef](https://getcl
 I'm interested in the aspects of technology that empower people instead of
 manipulating them.
 
-Lately, I've been making stuff with [Swift](https://swift.org/) and
+Lately, I've been making stuff (like this website) with [Swift](https://swift.org/) and
 [Clojure](http://clojure.org/).

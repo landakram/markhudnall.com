@@ -2,8 +2,6 @@ Title: Building static sites in Clojure with Stasis
 Author: Mark Hudnall
 Date: 2015-12-13
 
-# Building static sites in Clojure with Stasis
-
 [Stasis](https://github.com/magnars/stasis) is a static site toolkit for
 Clojure. Unlike pretty much every other static site generator, though, it is not
 an "opinionated framework", or packed full with flavor-of-the-month templating
