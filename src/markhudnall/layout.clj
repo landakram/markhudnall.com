@@ -30,18 +30,6 @@
           [:a {:href "http://wwww.google.com"} "Archive"]]
         ]]])
 
-(defn layout-post [request post]
-  (let [date (get-in post [:metadata :date])
-        title (get-in post [:metadata :title])
-        formatted-date (f/unparse (f/formatter "MMMM d, YYYY") date)
-        content (:html post)]
-    (layout-page 
-      request 
-      [:div
-        [:h1.post-title title]
-        [:time.post-date formatted-date]
-        content])))
-
 (defn layout-page [request page]
   (html5
     [:head
@@ -53,6 +41,7 @@
      (include-css "http://cdnjs.cloudflare.com/ajax/libs/emojify.js/0.9.5/emojify.min.css")
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
+     [:canvas.life-canvas]
      [:div.body
       (header)
       [:div.content 
@@ -60,6 +49,7 @@
         page]]]
      (include-js "/js/highlight.pack.js")
      (include-js "http://cdnjs.cloudflare.com/ajax/libs/emojify.js/0.9.5/emojify.min.js")
+     (include-js "/js/main.js")
      [:script "
         emojify.setConfig({
           // use githubs CDN
@@ -67,3 +57,16 @@
         })
         emojify.run();"]
      [:script "hljs.initHighlightingOnLoad();"]]))
+
+
+(defn layout-post [request post]
+  (let [date (get-in post [:metadata :date])
+        title (get-in post [:metadata :title])
+        formatted-date (f/unparse (f/formatter "MMMM d, YYYY") date)
+        content (:html post)]
+    (layout-page 
+      request 
+      [:div
+        [:h1.post-title title]
+        [:time.post-date formatted-date]
+        content])))

@@ -29,17 +29,6 @@
 (defn parse-posts [posts]
   (map parse-post posts))
 
-(defn markdown-pages [pages]
-  (let [parsed-pages (parse-pages (vals pages))]
-    (zipmap (map #(string/replace % #"\.md$" "/") (keys pages))
-            (map 
-              #(fn [req] 
-                ; page => {:metadata {...} :html "..."}
-                (let [{:keys [metadata html]} %
-                      author (:author metadata)
-                      date (:date metadata) ]
-                  (layout/layout-page req html)))
-              parsed-pages))))
 
 (defn recent-posts [posts] 
   (->> posts 
