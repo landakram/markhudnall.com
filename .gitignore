@@ -27,6 +27,5 @@ pom.xml.asc
 .repl/
 client.js
 clojure/
-cljs/
 repl/
 samplerepl/

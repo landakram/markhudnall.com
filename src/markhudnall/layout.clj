@@ -41,7 +41,7 @@
      (include-css "http://cdnjs.cloudflare.com/ajax/libs/emojify.js/0.9.5/emojify.min.css")
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
-     [:canvas.life-canvas]
+     [:div.life-canvas]
      [:div.body
       (header)
       [:div.content 
