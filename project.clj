@@ -45,7 +45,7 @@
                 :source-paths ["src/cljs"]
                 :figwheel true
                 :compiler {:main "markhudnall.core"
-                           :asset-path "js/out"
+                           :asset-path "/js/out"
                            :source-map true
                            :optimizations :none
                            :output-to "resources/public/js/main.js"
