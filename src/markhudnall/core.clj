@@ -10,8 +10,8 @@
             [optimus.html]
             [clojure.java.io :as io]
             [clj-time.format :as f]
-            [markhudnall.layout :as layout]
-            ))
+            [clj-time.core :as t]
+            [markhudnall.layout :as layout]))
 
 (defn parse-post [[filename contents]]
   ; post => {:metadata {...} :html "..."}
@@ -36,11 +36,19 @@
       reverse 
       (take 3)))
 
+(defn get-post-path [post]
+  (let [permalink (get-in post [:metadata :permalink])
+        date (get-in post [:metadata :date])
+        year (t/year date)
+        month (t/month date)
+        day (t/day date)]
+    (str "/" year "/" month "/" day permalink)))
+
 (defn layout-recent-post [post]
   (let [metadata (:metadata post)
                   title (:title metadata)
-                  permalink (:permalink metadata)]
-    [:li [:a {:href permalink} title]]))
+                  path (get-post-path post)]
+    [:li [:a {:href path} title]]))
 
 (defn layout-recent-posts [posts]
   [:ul
@@ -65,18 +73,18 @@
         req 
         (layout-front-page recent-posts)))))
 
-(defn get-assets[]
+(defn get-assets []
   (assets/load-assets "public" [#".*"]))
-
 
 (defn post-pages [posts]
   (let [post-pairs (map #(vector (get-in % [:metadata :permalink]) %) posts)
         post-map (into {} post-pairs)]
-    (zipmap (keys post-map)
-            (map 
-              #(fn [req] 
-                  (layout/layout-post req %))
-              (vals post-map)))))
+    (->> posts 
+         (map (fn [post] 
+                (let [path (get-post-path post)
+                      html-fn #(layout/layout-post % post)]
+                  [path html-fn])))
+         (into {}))))
 
 (defn get-raw-pages []
   (let [posts (parse-posts (stasis/slurp-directory "resources/posts" #".md$"))]
