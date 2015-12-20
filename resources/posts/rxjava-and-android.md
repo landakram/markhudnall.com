@@ -19,47 +19,45 @@ In both cases, [RxJava](https://github.com/Netflix/RxJava) helps me keep my sani
 It's an inconvenient necessity that we have to worry about blocking the UI thread. Android provides [AsyncTask](https://developer.android.com/reference/android/os/AsyncTask.html) to help ease this pain, letting you do work on the background with `doInBackground` and then delivering on the UI thread with `onPostExecute`. For the most part, the AsyncTasks I create are requests to Clef's API server that return JSON. But there are a few pitfalls with AsyncTask:
 
 *   Error handling: as [mttkay points out](https://mttkay.github.io/blog/2013/08/25/functional-reactive-programming-on-android-with-rxjava/), there's no easy way to handle error messages in the UI for errors that happen in the background. I usually return null instead of the actual JSONObject and then later handle the case where the JSONObject is null. Ugh.
-*   Code reuse/readability: Since API requests are all similar, I use a general APIRequestTask that I give a path and some parameters. I also pass in the caller which implements a `APIRequestHandler` interface, so the caller can handle the results.
+* Code reuse/readability: Since API requests are all similar, I use a general APIRequestTask that I give a path and some parameters. I also pass in the caller which implements a `APIRequestHandler` interface, so the caller can handle the results.
     
-    In the activity/fragment:
+In the activity/fragment:
     
-        APIRequestTask request = new APIRequestTask("/user/register", this);
-        request.putParameter("email", "test@example.com");
-        request.execute();
-        
+    APIRequestTask request = new APIRequestTask("/user/register", this);
+    request.putParameter("email", "test@example.com");
+    request.execute();
     
-    In `APIRequestTask.java`:
+In `APIRequestTask.java`:
     
-        public interface NetworkRequestHandler {
-            public void onRequestCompleted(JSONObject response, String url);
-        }
-        
-        public NetworkRequestTask(String url, NetworkRequestHandler handler) {
-            this.url = url;
-            this.mHandler = handler;
-            this.requestParameters = new ArrayList<NameValuePair>();
-        }
-        
-        public void putParameter(String key, String value) {
-            if (key != null && value != null) {
-                requestParameters.add(new BasicNameValuePair(key, value));
-            }
-        }
-        
-        @Override
-        protected JSONObject doInBackground(Void... voids) {
-            // Do the request
-        }
-        
-        @Override
-        protected void onPostExecute(JSONObject response) {
-            if (mHandler != null) {
-                mHandler.onRequestCompleted(response, this.url);
-            }
-        }
-        
+    public interface NetworkRequestHandler {
+        public void onRequestCompleted(JSONObject response, String url);
+    }
     
-    Though the generality is nice, with this pattern, if a calling Activity/Fragment makes multiple requests, it needs to handle responses in a single function by switching on the URL. This makes for code that isn't very readable, especially when you have to jump from where the request is executed to where the response is handled.
+    public NetworkRequestTask(String url, NetworkRequestHandler handler) {
+        this.url = url;
+        this.mHandler = handler;
+        this.requestParameters = new ArrayList<NameValuePair>();
+    }
+    
+    public void putParameter(String key, String value) {
+        if (key != null && value != null) {
+            requestParameters.add(new BasicNameValuePair(key, value));
+        }
+    }
+    
+    @Override
+    protected JSONObject doInBackground(Void... voids) {
+        // Do the request
+    }
+    
+    @Override
+    protected void onPostExecute(JSONObject response) {
+        if (mHandler != null) {
+            mHandler.onRequestCompleted(response, this.url);
+        }
+    }
+    
+Though the generality is nice, with this pattern, if a calling Activity/Fragment makes multiple requests, it needs to handle responses in a single function by switching on the URL. This makes for code that isn't very readable, especially when you have to jump from where the request is executed to where the response is handled.
 
 ### Once more, with feeling
 
