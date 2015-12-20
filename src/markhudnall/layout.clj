@@ -25,9 +25,9 @@
         [:li
           [:a {:href "/"} "Home"]]
         [:li
-          [:a {:href "/about"} "About"]]
+          [:a {:href "/about/"} "About"]]
         [:li
-          [:a {:href "http://wwww.google.com"} "Archive"]]
+          [:a {:href "/archive/"} "Archive"]]
         ]]])
 
 (defn layout-page [request page]
