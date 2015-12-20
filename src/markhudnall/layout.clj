@@ -23,7 +23,7 @@
     [:nav.navigation
       [:ul
         [:li
-          [:a {:href "http://wwww.google.com"} "Home"]]
+          [:a {:href "/"} "Home"]]
         [:li
           [:a {:href "/about"} "About"]]
         [:li
@@ -58,11 +58,13 @@
         emojify.run();"]
      [:script "hljs.initHighlightingOnLoad();"]]))
 
+(defn format-date [date]
+  (f/unparse (f/formatter "MMMM d, YYYY") date))
 
 (defn layout-post [request post]
   (let [date (get-in post [:metadata :date])
         title (get-in post [:metadata :title])
-        formatted-date (f/unparse (f/formatter "MMMM d, YYYY") date)
+        formatted-date (format-date date)
         content (:html post)]
     (layout-page 
       request 

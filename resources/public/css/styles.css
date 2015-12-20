@@ -1,5 +1,4 @@
-html, body {
-}
+html, body { }
 
 body {
     margin: 0;
@@ -26,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.1em;
 }
 
-div.body {
+.body {
     position: relative;
     margin: 0em auto;
 
@@ -36,7 +35,7 @@ div.body {
     max-width: 720px;
 }
 
-div.content {
+.content {
     padding: 2em;
     margin-bottom: 5em;
 
@@ -50,7 +49,7 @@ div.content {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.125);
 }
 
-div.header {
+.header {
     margin: 2em 2em;
     display: flex;
     flex-direction: row;
@@ -63,30 +62,28 @@ div.header {
     color: #444;
     text-decoration: none;
 }
-
-div.logo {
+.logo {
     font-weight: 700;
 }
 
-.navigation {
-}
-
+.navigation { }
 .navigation ul {
     margin: auto;
     list-style: none;
     display: flex;
     align-items: center;
 }
-
 .navigation li {
     margin-left: 0.5em;
 }
-
 .navigation a {
     text-decoration: none;
 }
 
 article {
+}
+article img {
+    max-width: 100%;
 }
 
 pre {
@@ -98,6 +95,7 @@ pre {
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+
 .emoji {
     width: 1em;
     height: 1em;
@@ -112,7 +110,40 @@ pre {
     display: block;
     font-style: italic;
 }
+
 .life-canvas {
     z-index: 0;
     position: absolute;
+}
+
+img.me {
+    width: 150px;
+    float: right;
+    margin-left: 1em;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.archive {
+    list-style: none;
+    padding-left: 0;
+}
+.archive a {
+    text-decoration: none;
+}
+.archive .post-title {
+    margin-bottom: 0.1em;
+}
+.archive .post-date {
+    margin-top: 0.1em;
+}
+.archive li {
+    margin: 40px 0;
+}
+.archive li:first-child {
+    margin-top: 0;
+}
+.archive li:last-child {
+    margin-bottom: 0;
 }
