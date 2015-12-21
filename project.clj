@@ -16,6 +16,7 @@
                  [figwheel "0.5.0-1"]
                  [cljsbuild "1.0.6"]
                  [optimus "0.18.3"]
+                 [ring/ring-headers "0.1.3"]
                  [prismatic/dommy "1.1.0"]]
 
   :ring {:handler markhudnall.core/app

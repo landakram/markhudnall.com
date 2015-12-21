@@ -11,6 +11,8 @@
             [clojure.java.io :as io]
             [clj-time.format :as f]
             [clj-time.core :as t]
+            [ring.middleware.content-type :refer [wrap-content-type]]
+            [ring.middleware.default-charset :refer [wrap-default-charset]]
             [markhudnall.layout :as layout]))
 
 (defn parse-post [[filename contents]]
@@ -174,10 +176,14 @@
 (defn get-pages []
   (prepare-pages (get-raw-pages)))
 
-(def app (optimus/wrap (stasis/serve-pages get-pages)
-                       get-assets
-                       optimizations/all
-                       serve-live-assets))
+(def app (-> (stasis/serve-pages get-pages) 
+             (optimus/wrap 
+               get-assets
+               ;optimizations/all
+               optimizations/none
+               serve-live-assets)
+             (wrap-content-type)
+             (wrap-default-charset "UTF-8")))
 
 (def export-dir "dist")
 
