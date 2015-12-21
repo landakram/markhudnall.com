@@ -11,9 +11,17 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-a:link    { color: #3868FF }  /* unvisited links */
-a:visited { color: #8AA6FF }  /* visited links   */
-a:hover   { color: #0C46FF }  /* user hovers     */
+a:link { 
+    color: #4A60D6;
+    text-decoration: none;
+}  /* unvisited links */
+a:visited { 
+    color: #4A60D6;
+}  /* visited links   */
+a:hover { 
+    color: #4A60D6;
+    text-decoration: underline;
+}  /* user hovers     */
 
 h1 {
     font-family: "fatfrank";
@@ -77,8 +85,11 @@ h1, h2, h3, h4, h5, h6 {
     margin-left: 0.5em;
 }
 .navigation a {
-    text-decoration: none;
 }
+
+.navigation a:link    { color: #4A60D6 }  /* unvisited links */
+.navigation a:visited { color: #4A60D6 }  /* visited links   */
+.navigation a:hover   { color: #4A60D6 }  /* user hovers     */
 
 article {
 }
@@ -130,7 +141,6 @@ img.me {
     padding-left: 0;
 }
 .archive a {
-    text-decoration: none;
 }
 .archive .post-title {
     margin-bottom: 0.1em;
