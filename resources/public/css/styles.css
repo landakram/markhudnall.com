@@ -147,3 +147,9 @@ img.me {
 .archive li:last-child {
     margin-bottom: 0;
 }
+
+hr { 
+    background-color: #f6f6f6; 
+    height: 2px; 
+    border: 0; 
+}

@@ -4,18 +4,6 @@
             [clj-time.format :as f]
             ))
 
-(defn fonts []
-  ; Load fonts from Typekit
-  [:script 
-  "(function(d) {
-      var config = {
-        kitId: 'ues0olh',
-        scriptTimeout: 3000,
-        async: true
-      },
-      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,'')+' wf-inactive';},config.scriptTimeout),tk=d.createElement('script'),f=false,s=d.getElementsByTagName('script')[0],a;h.className+=' wf-loading';tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!='complete'&&a!='loaded')return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-    })(document);"])
-
 (defn header []
   [:div.header 
     [:div.logo 
@@ -37,7 +25,10 @@
      [:meta {:name "viewport"
              :content "width=device-width, initial-scale=1.0"}]
      [:title "Mark Hudnall"]
-     (fonts)
+     ; Load fonts from typekit
+     [:script {:src "https://use.typekit.net/ues0olh.js"}]
+     [:script "try{Typekit.load({ async: true });}catch(e){}"]
+
      (include-css "http://cdnjs.cloudflare.com/ajax/libs/emojify.js/0.9.5/emojify.min.css")
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
