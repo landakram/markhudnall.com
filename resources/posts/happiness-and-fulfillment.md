@@ -1,4 +1,4 @@
-Title: Happyiness and Fulfillment
+Title: Happiness and Fulfillment
 Date: 2013-11-5
 
 Two patients lie in their death beds in a hospital. Maybe they're both surrounded by their family and friends. Maybe they're in the Northwest as the weather gets colder and they both realize independently, at slightly different times, that they'll never see the sun again. Maybe they each have regrets.
