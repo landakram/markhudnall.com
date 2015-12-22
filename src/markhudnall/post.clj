@@ -4,19 +4,27 @@
             [clj-time.core :as t]
            [clojure.string :as string]))
 
+(defn parse-metadata [metadata filename]
+  (let [parsed-metadata (zipmap (keys metadata) (map first (vals metadata)))
+        draft? (= (:draft parsed-metadata) "true")
+        raw-date (:date parsed-metadata)
+        parsed-date (f/parse raw-date)
+        permalink (string/replace filename #"\.md$" "/")]
+    (-> parsed-metadata
+        (assoc :permalink permalink)
+        (assoc :date parsed-date)
+        (dissoc :draft)
+        (assoc :draft? draft?))))
+
 (defn parse [[filename contents]]
   ; post => {:metadata {...} :html "..."}
   (let [post (markdown/md-to-html-string-with-meta contents :footnotes? true)
         metadata (:metadata post)
         ; {key [value]} => {key value}
-        parsed-metadata (zipmap (keys metadata) (map first (vals metadata)))
-        raw-date (:date parsed-metadata)
-        parsed-date (f/parse raw-date)
-        permalink (string/replace filename #"\.md$" "/")]
+        parsed-metadata (parse-metadata metadata filename)
+        ]
     (-> post 
-        (assoc :metadata parsed-metadata)
-        (assoc-in [:metadata :permalink] permalink)
-        (assoc-in [:metadata :date] parsed-date))))
+        (assoc :metadata parsed-metadata))))
 
 (defn parse-many [posts]
   (map parse posts))

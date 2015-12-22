@@ -42,19 +42,25 @@
 (defn get-assets []
   (assets/load-assets "public" [#".*"]))
 
+(defn get-posts []
+  (post/parse-many (stasis/slurp-directory "resources/posts" #".md$")))
+
 (defn get-raw-pages []
-  (let [posts (post/parse-many (stasis/slurp-directory "resources/posts" #".md$"))
-        sorted-posts (reverse (sort-by #(get-in % [:metadata :date]) posts))]
+  (let [posts (get-posts)
+        sorted-posts (->> posts
+                          (filter #(not (get-in % [:metadata :draft?])))
+                          (sort-by #(get-in % [:metadata :date]))
+                          (reverse))]
     (stasis/merge-page-sources
-      {:public 
+      {:public
        (stasis/slurp-directory "resources/public" #".*\.(html|css|js)$")
        :front-page
-       {"/" (pages/front-page posts projects)}
+       {"/" (pages/front-page sorted-posts projects)}
        :about-page
        {"/about/" (pages/about-page me)}
        :archive-page
        {"/archive/" (pages/archive-page sorted-posts)}
-       :posts 
+       :posts
        (pages/post-pages posts)})))
 
 (defn prepare-page [page req]
