@@ -1,0 +1,7 @@
+uploads/
+logs/
+cache/
+nbproject/
+.svn
+.git
+.DS_Store
