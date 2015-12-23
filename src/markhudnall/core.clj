@@ -17,18 +17,18 @@
 
 (def export-dir "dist")
 
-(def projects 
+(def projects
    [{:name "Clef"
      :homepage "https://getclef.com"
      :short-description "a better way to log in online"}
     {:name "Kiwi"
-     :homepage "http://kiwi.markhudnall.com"
-     :short-description "a personal wiki you write in Markdown"}
+     ;; :homepage "http://kiwi.markhudnall.com"
+     :short-description "a personal wiki you write in Markdown (not quite ready yet)"}
     {:name "East Bay Mobile Hack Night"
      :homepage "http://www.meetup.com/east-bay-mobile-hack-night/"
      :short-description "a mobile project meetup I host in downtown Oakland"}])
 
-(def me 
+(def me
   {:image "http://1.gravatar.com/avatar/6d07453a68471e4682e8daceef543820?size=300"
    :elsewhere [{:name "GitHub"
                :url "https://github.com/landakram"}

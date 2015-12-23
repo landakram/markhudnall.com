@@ -98,8 +98,12 @@
 (defn layout-project-li [project]
   (let [href (:homepage project)
         name (:name project)
-        descr (:short-description project)]
-    [:li [:a {:href href} name] (str " is " descr)]))
+        descr (:short-description project)
+        live? (not (nil? href))
+        link-html (if live?
+                    [:a {:href href} name]
+                    name)]
+    [:li link-html (str " is " descr)]))
 
 (defn layout-front-page [recent-posts projects]
   [:div
