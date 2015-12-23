@@ -1,6 +1,5 @@
 Title: Depth-first and breadth-first thinkers
 Date: 2015-12-21
-Draft: true
 
 This piece is about working on teams.
 
