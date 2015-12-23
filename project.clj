@@ -24,7 +24,7 @@
 
   :plugins [[lein-figwheel "0.5.0-1"] [lein-cljsbuild "1.1.1"]]
 
-  :clean-targets ^{:protect false} [:target-path ["resources/public/js/main.js" "resources/public/js/out"]]
+  :clean-targets ^{:protect false} [:target-path ["resources/public/js/main.js" "resources/public/js/out" "resources/public/js/out-prod"]]
 
   :aliases {"build-site" ["do" 
                           "clean"

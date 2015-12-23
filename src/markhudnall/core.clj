@@ -58,9 +58,7 @@
                           (sort-by #(get-in % [:metadata :date]))
                           (reverse))]
     (stasis/merge-page-sources
-      {:public
-       (stasis/slurp-directory "resources/public" #".*\.(html|css|js)$")
-       :front-page
+      {:front-page
        {"/" (pages/front-page sorted-posts projects)}
        :about-page
        {"/about/" (pages/about-page me)}
