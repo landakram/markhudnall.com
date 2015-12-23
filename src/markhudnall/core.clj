@@ -88,8 +88,17 @@
              (wrap-content-type)
              (wrap-default-charset "UTF-8")))
 
+(defn load-export-dir []
+  (stasis/slurp-directory export-dir #"\.[^.]+$"))
+
 (defn export []
-  (let [assets (optimizations/all (get-assets) {})]
+  (let [assets (optimizations/all (get-assets) {})
+        old-files (load-export-dir)]
+    (println "Gathering pages...")
     (stasis/empty-directory! export-dir)
     (optimus.export/save-assets assets export-dir)
-    (stasis/export-pages (get-pages) export-dir {:optimus-assets assets})))
+    (stasis/export-pages (get-pages) export-dir {:optimus-assets assets})
+    (println)
+    (println "Export complete:")
+    (stasis/report-differences old-files (load-export-dir))
+    (println)))
