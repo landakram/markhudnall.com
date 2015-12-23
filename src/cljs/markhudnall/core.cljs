@@ -3,6 +3,7 @@
                    [dommy.core :refer [sel1]])
   (:require [cljs.core.async :refer [chan put! <! timeout]]
             [dommy.core :as dommy]
+            [clojure.set]
             [reagent.core :as r]))
 
 (enable-console-print!)
