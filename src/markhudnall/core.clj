@@ -40,7 +40,13 @@
                :url "https://www.linkedin.com/in/mark-hudnall-5bb82b1b"}]})
 
 (defn get-assets []
-  (assets/load-assets "public" [#".*"]))
+  (concat
+    (assets/load-bundle "public" 
+                        "main.js"
+                        ["/js/highlight.pack.js"
+                         "/js/main.js"])
+    (assets/load-assets "public" [#"/css/.*"])
+    (assets/load-assets "public" [#"/img/.*"])))
 
 (defn get-posts []
   (post/parse-many (stasis/slurp-directory "resources/posts" #".md$")))
