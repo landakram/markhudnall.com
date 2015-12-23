@@ -26,7 +26,7 @@ For example, you walk down the path on the right until you reach a fork. If you 
 
 You can imagine the trade-offs of both: 
 
-* With depth-first search, you go *really* far down one path really quickly. That works out :thumbsup: for you if the exit happens to be far away, but if the exit is down the other path and really close, you won't discover it for a while.
+* With depth-first search, you go *really* far down one path really quickly. That works out 👍for you if the exit happens to be far away, but if the exit is down the other path and really close, you won't discover it for a while.
 * With breadth-first search, it takes a long time to reach an exit that's far away, but you'll never miss an exit on a path that's really close by.
 
 Tree traversal algorithms like DFS and BFS are used in many computing disciplines. For example, you can represent a chess game as a tree, where each "fork in the road" represents a different board configuration and each road is a possible move by one of the players. If you could explore this tree quickly, you could look ahead in the game and always make a move that gives you a leg up. Armed with this tree, a computer becomes a worthy chess opponent. 

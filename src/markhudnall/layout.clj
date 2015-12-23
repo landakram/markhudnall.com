@@ -8,6 +8,21 @@
 (defn format-date [date]
   (f/unparse (f/formatter "MMMM d, YYYY") date))
 
+(defn inject-analytics []
+  [:script {:type "text/javascript"}
+   "var _gauges = _gauges || [];
+    (function() {
+      var t   = document.createElement('script');
+      t.type  = 'text/javascript';
+      t.async = true;
+      t.id    = 'gauges-tracker';
+      t.setAttribute('data-site-id', '567a3795bb922a54720006b5');
+      t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+      t.src = 'https://track.gaug.es/track.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(t, s);
+    })();"])
+
 (defn layout-header []
   [:div.header 
     [:div.logo 
@@ -31,9 +46,7 @@
      [:title "Mark Hudnall"]
      ; Load fonts from typekit
      [:script {:src "https://use.typekit.net/ues0olh.js"}]
-     [:script "try{Typekit.load({ async: true });}catch(e){}"]
-
-     (include-css "http://cdnjs.cloudflare.com/ajax/libs/emojify.js/0.9.5/emojify.min.css")
+     [:script "try{Typekit.load({ async: false });}catch(e){}"]
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
      [:div.life-canvas]
@@ -42,16 +55,9 @@
       [:div.content 
        [:article 
         page]]]
-     (include-js "/js/highlight.pack.js")
-     (include-js "http://cdnjs.cloudflare.com/ajax/libs/emojify.js/0.9.5/emojify.min.js")
-     (include-js "/js/main.js")
-     [:script "
-        emojify.setConfig({
-          // use githubs CDN
-          img_dir: 'https://github.global.ssl.fastly.net/images/icons/emoji/'
-        })
-        emojify.run();"]
-     [:script "hljs.initHighlightingOnLoad();"]]))
+     (apply include-js (link/bundle-paths request ["main.js"]))
+     [:script "hljs.initHighlightingOnLoad();"]
+     (inject-analytics)]))
 
 (defn layout-post [request post]
   (let [date (get-in post [:metadata :date])

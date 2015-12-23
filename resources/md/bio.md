@@ -1,4 +1,4 @@
-Hi, I'm Mark :wave:. 
+Hi, I'm Mark 👋. 
 
 I'm interested in technology - how we use it and how it shapes us.
 

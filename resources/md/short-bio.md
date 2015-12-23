@@ -1,4 +1,4 @@
-Hi, I'm Mark :wave:. I'm a technology enthusiast and CTO at [Clef](https://getclef.com), a security company based in Oakland, CA. 
+Hi, I'm Mark 👋. I'm a technology enthusiast and CTO at [Clef](https://getclef.com), a security company based in Oakland, CA. 
 
 I'm interested in building technology that empowers people instead of
 manipulating them.
