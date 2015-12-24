@@ -29,10 +29,10 @@
 (defn parse-many [posts]
   (map parse posts))
 
-(defn get-recent [posts] 
-  (->> posts 
+(defn get-recent [posts]
+  (->> posts
       (sort-by #(get-in % [:metadata :date]))
-      reverse 
+      reverse
       (take 3)))
 
 (defn get-full-path [post]

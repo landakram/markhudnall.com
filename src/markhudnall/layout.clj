@@ -37,13 +37,17 @@
           [:a {:href "/archive/"} "Archive"]]
         ]]])
 
-(defn layout-page [request page]
-  (html5
+(defn title-ify [title]
+  (str title " | Mark Hudnall"))
+
+(defn layout-page
+  ([request title page]
+   (html5
     [:head
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport"
              :content "width=device-width, initial-scale=1.0"}]
-     [:title "Mark Hudnall"]
+     [:title title]
      ; Load fonts from typekit
      [:script {:src "https://use.typekit.net/ues0olh.js"}]
      [:script "try{Typekit.load({ async: false });}catch(e){}"]
@@ -52,20 +56,22 @@
      [:div.life-canvas]
      [:div.body
       (layout-header)
-      [:div.content 
-       [:article 
+      [:div.content
+       [:article
         page]]]
      (apply include-js (link/bundle-paths request ["main.js"]))
      [:script "hljs.initHighlightingOnLoad();"]
      (inject-analytics)]))
+  ([request page] (layout-page request "Mark Hudnall" page)))
 
 (defn layout-post [request post]
   (let [date (get-in post [:metadata :date])
         title (get-in post [:metadata :title])
         formatted-date (format-date date)
         content (:html post)]
-    (layout-page 
-      request 
+    (layout-page
+      request
+      (title-ify title)
       [:div
         [:h1.post-title title]
         [:time.post-date formatted-date]

@@ -1,12 +1,13 @@
-(ns markhudnall.pages 
+(ns markhudnall.pages
   (require [markhudnall.layout :as layout]
            [markhudnall.post :as post]
            [markdown.core :as markdown]))
 
 (defn about-page [me]
   (fn [req]
-    (layout/layout-page 
+    (layout/layout-page
       req
+      (layout/title-ify "About")
       [:div
        [:img.me {:src (:image me) :alt "Mark Hudnall"}]
        [:section.bio
@@ -19,6 +20,7 @@
   (fn [req]
     (layout/layout-page
       req
+      (layout/title-ify "Archive")
       [:div
        (layout/layout-archive-posts posts)])))
 
