@@ -9,11 +9,11 @@ elif [ $1 == "live" ]
         if [[ -z $2 ]]
             then
                 echo "Performing dry-run..."
-                rsync --dry-run -az --force --delete --progress --exclude-from=.rsyncignore -e "ssh -p22" ./dist/ mark@rosebud:/var/www/markhudnall
+                rsync --dry-run -az --force --delete --exclude-from=.rsyncignore -e "ssh -p22" ./dist/ mark@rosebud:/var/www/markhudnall
         elif [ $2 == "go" ]
             then
                 echo "Deploying..."
-                rsync -az --force --delete --progress --exclude-from=.rsyncignore -e "ssh -p22" ./dist/ mark@rosebud:/var/www/markhudnall
+                rsync -az --force --delete --exclude-from=.rsyncignore -e "ssh -p22" ./dist/ mark@rosebud:/var/www/markhudnall
         else
             echo $ERRORSTRING;
         fi
