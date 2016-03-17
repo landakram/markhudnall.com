@@ -38,7 +38,10 @@
 (defn get-full-path [post]
   (let [permalink (get-in post [:metadata :permalink])
         date (get-in post [:metadata :date])
-        year (t/year date)
-        month (t/month date)
-        day (t/day date)]
+        formatted-date (f/unparse (f/formatters :year-month-day) date)
+        [year month day] (string/split formatted-date #"-")]
     (str "/" year "/" month "/" day permalink)))
+
+
+
+
