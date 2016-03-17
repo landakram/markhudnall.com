@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.122" :scope "provided"]
                  [org.clojure/core.async "0.2.374" :scope "provided"]
-                 [stasis "2.2.2"]
+                 [stasis "2.2.3-SNAPSHOT"]
                  [reagent "0.5.1"]
                  [ring "1.4.0"]
                  [hiccup "1.0.5"]

@@ -24,8 +24,8 @@
     })();"])
 
 (defn layout-header []
-  [:div.header 
-    [:div.logo 
+  [:div.header
+    [:div.logo
       [:a {:href "/"} "Mark Hudnall"]]
     [:nav.navigation
       [:ul
