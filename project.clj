@@ -24,7 +24,7 @@
 
   :plugins [[lein-figwheel "0.5.0-1"] [lein-cljsbuild "1.1.1"]]
 
-  :clean-targets ^{:protect false} [:target-path ["resources/public/js/main.js" "resources/public/js/out" "resources/public/js/out-prod"]]
+  :clean-targets ^{:protect false} [:target-path "resources/public/js/main.js" "resources/public/js/out" "resources/public/js/out-prod"]
 
   :aliases {"build-site" ["do" 
                           "clean"
@@ -38,11 +38,12 @@
                         [lein-figwheel "0.5.0-1"]
                         [lein-cljsbuild "1.1.1"]]
               :dependencies [[ring/ring-mock "0.3.0"]
-                            [ring/ring-devel "1.4.0"]
-                            [lein-figwheel "0.5.0-1"]
-                            [org.clojure/tools.nrepl "0.2.11"]
-                            [pjstadig/humane-test-output "0.7.0"]
-                            [org.clojure/clojurescript "1.7.170"]]}}
+                             [ring/ring-devel "1.4.0"]
+                             [lein-figwheel "0.5.0-1"]
+                             [com.cemerick/piggieback "0.2.1"]
+                             [org.clojure/tools.nrepl "0.2.11"]
+                             [pjstadig/humane-test-output "0.7.0"]
+                             [org.clojure/clojurescript "1.7.170"]]}}
 
   :cljsbuild {
     :builds [{:id "dev" 
@@ -59,7 +60,7 @@
               :compiler {:main "markhudnall.core"
                          :asset-path "/js/out"
                          :source-map "resources/public/js/main.js.map"
-                         :optimizations :advanced
+                         :optimizations :whitespace ;; Optimized by Optimus
                          :output-to "resources/public/js/main.js"
                          :output-dir "resources/public/js/out-prod"}}]
   }
