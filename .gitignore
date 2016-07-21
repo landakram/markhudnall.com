@@ -9,7 +9,6 @@ pom.xml.asc
 /.nrepl-port
 .hgignore
 .hg/
-dist/
 out
 out-*
 target
