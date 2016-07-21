@@ -15,7 +15,6 @@ target
 lib
 classes
 checkouts
-main.js
 *.map
 pom.xml
 pom.xml.asc
@@ -31,3 +30,4 @@ clojure/
 repl/
 samplerepl/
 figwheel_server.log
+resources/public/js/main.js
