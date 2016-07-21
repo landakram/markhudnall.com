@@ -8,6 +8,6 @@ RUN apt-get update && \
 ADD dist /app
 ADD conf/nginx.conf /app/.nginx.conf
 
-EXPOSE 5000
+EXPOSE 80
 
 CMD ["nginx", "-c", "/app/.nginx.conf"]
