@@ -22,8 +22,8 @@
      :homepage "https://getclef.com"
      :short-description "a better way to log in online"}
     {:name "Kiwi"
-     ;; :homepage "http://kiwi.markhudnall.com"
-     :short-description "a personal wiki you write in Markdown (not quite ready yet)"}
+     :homepage "https://github.com/landakram/kiwi"
+     :short-description "a personal wiki you write in Markdown"}
     {:name "East Bay Mobile Hack Night"
      :homepage "http://www.meetup.com/east-bay-mobile-hack-night/"
      :short-description "a mobile project meetup I host in downtown Oakland"}])
