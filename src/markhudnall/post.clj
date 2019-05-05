@@ -1,8 +1,8 @@
 (ns markhudnall.post
-  (require [markdown.core :as markdown]
-           [clj-time.format :as f]
+  (:require [markdown.core :as markdown]
+            [clj-time.format :as f]
             [clj-time.core :as t]
-           [clojure.string :as string]))
+            [clojure.string :as string]))
 
 (defn parse-metadata [metadata filename]
   (let [parsed-metadata (zipmap (keys metadata) (map first (vals metadata)))
