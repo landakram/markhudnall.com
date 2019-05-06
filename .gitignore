@@ -31,3 +31,4 @@ repl/
 samplerepl/
 figwheel_server.log
 resources/public/js/main.js
+.DS_Store

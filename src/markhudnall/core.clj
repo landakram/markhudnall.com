@@ -19,14 +19,17 @@
 
 (def projects
    [{:name "Clef"
-     :homepage "https://getclef.com"
-     :short-description "a better way to log in online"}
+     :homepage "https://web.archive.org/web/20161108070329/https://getclef.com/"
+     :short-description "was a better way to log in online"}
     {:name "Kiwi"
      :homepage "https://github.com/landakram/kiwi"
-     :short-description "a personal wiki you write in Markdown"}
-    {:name "East Bay Mobile Hack Night"
-     :homepage "http://www.meetup.com/east-bay-mobile-hack-night/"
-     :short-description "a mobile project meetup I host in downtown Oakland"}])
+     :short-description "is a personal wiki you write in Markdown"}
+    {:name "Instant2FA"
+     :homepage "https://www.producthunt.com/posts/instant-2fa"
+     :short-description "was a drop-in 2FA integration"}
+    {:name "gdax_recurring"
+     :homepage "https://github.com/landakram/gdax_recurring"
+     :short-description "is a CLI script to automate recurring USD deposits and asset allocation for GDAX"}])
 
 (def me
   {:image "http://1.gravatar.com/avatar/6d07453a68471e4682e8daceef543820?size=300"
@@ -34,8 +37,8 @@
                :url "https://github.com/landakram"}
                {:name "Twitter"
                :url "https://twitter.com/landakram"}
-               {:name "PGP"
-               :url "https://pgp.mit.edu/pks/lookup?op=get&search=0xB6822DEC4CEACD1C"}
+               {:name "Keybase"
+               :url "https://keybase.io/landakram"}
                {:name "LinkedIn"
                :url "https://www.linkedin.com/in/mark-hudnall-5bb82b1b"}]})
 
@@ -65,7 +68,7 @@
        :archive-page
        {"/archive/" (pages/archive-page sorted-posts)}
        :posts
-       (pages/post-pages posts)})))
+       (pages/post-pages sorted-posts)})))
 
 (defn prepare-page [page req]
   (if (string? page) 

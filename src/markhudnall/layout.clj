@@ -109,7 +109,7 @@
         link-html (if live?
                     [:a {:href href} name]
                     name)]
-    [:li link-html (str " is " descr)]))
+    [:li link-html " " descr]))
 
 (defn layout-front-page [recent-posts projects]
   [:div

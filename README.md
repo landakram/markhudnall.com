@@ -9,7 +9,7 @@ Posts are written in markdown, turned into a static site using [stasis](https://
 If you want your *very own* copy of my personal website, you can clone it and build with: 
 
 ```shell
-lein build-site
+make build
 ```
 
 If, for whatever reason, you then wanted to *deploy* my personal website on your own server, you could do so with dokku:
