@@ -41,9 +41,14 @@
 (defn title-ify [title]
   (str title " | Mark Hudnall"))
 
+(defn default-js-includes [request]
+  {:includes (link/bundle-paths request ["main.js"])
+   :inlines [:script]})
+
 (defn layout-page
   ([request title page]
-   (layout-page request title page ["main.js"]))
+   (let [js-includes (default-js-includes request)]
+     (layout-page request title page js-includes)))
   ([request title page js-includes]
    (html5
     [:head
@@ -62,7 +67,8 @@
       [:div.content
        [:article
         page]]]
-     (apply include-js (link/bundle-paths request js-includes))
+     (apply include-js (:includes js-includes))
+     [:div (:inlines js-includes)]
      [:script "hljs.initHighlightingOnLoad();"]
      (inject-analytics)]))
   ([request page] (layout-page request "Mark Hudnall" page)))
@@ -75,6 +81,7 @@
   (let [date (get-in post [:metadata :date])
         title (get-in post [:metadata :title])
         permalink (get-in post [:metadata :permalink])
+        runners (get-in post [:metadata :runners])
         formatted-date (format-date date)
         content (:html post)
         ;; "posts-<post-name>.js"
@@ -82,7 +89,12 @@
         custom-js-includes (link/bundle-paths
                             request
                             [post-js-include])
-        js-includes (if (empty? custom-js-includes) ["main.js"] [post-js-include])]
+        js-includes (if (empty? custom-js-includes)
+                      (default-js-includes request)
+                      {:includes
+                       custom-js-includes
+                       :inlines
+                       (map (fn [runner] [:script runner]) runners)})]
     (println js-includes)
     (layout-page
       request

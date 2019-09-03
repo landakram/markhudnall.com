@@ -14,6 +14,7 @@
                  [markdown-clj "1.10.0"]
                  [clj-time "0.15.1"]
                  [optimus "0.20.2"]
+                 [quil "3.0.0"]
                  [ring/ring-headers "0.3.0"]
                  [prismatic/dommy "1.1.0"]]
 
@@ -23,11 +24,17 @@
   :plugins [[lein-figwheel "0.5.18"] [lein-cljsbuild "1.1.7"]
             [lein-ancient "0.6.15"]]
 
-  :clean-targets ^{:protect false} [:target-path "resources/public/js/main.js" "resources/public/js/out" "resources/public/js/out-prod"]
+  :clean-targets ^{:protect false} [:target-path
+                                    "resources/public/js/main.js"
+                                    "resources/public/js/out"
+                                    "resources/public/js/out-prod"
+                                    "resources/public/js/posts/"
+                                    ]
 
   :aliases {"build-site" ["do" 
                           "clean"
                           ["cljsbuild" "once" "production"] 
+                          ["cljsbuild" "once" "circles-prod"]
                           ["run" "-m" "markhudnall.core/export"]]
             "fig" ["trampoline" "run" "-m" "figwheel.main"]
             "build-dev" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]}
@@ -47,19 +54,19 @@
               :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}}}
 
   :cljsbuild {
-    :builds [{:id "dev" 
-              :source-paths ["src/cljs"]
-              :compiler {:main "markhudnall.core"
-                         :asset-path "/js/out"
-                         :source-map true
-                         :optimizations :none
-                         :output-to "resources/public/js/main.js"
-                         :output-dir "resources/public/js/out" } }
-             {:id "production"
-              :source-paths ["src/cljs"]
+    :builds [{:id "production"
+              :source-paths ["src/cljs/markhudnall"]
               :compiler {:main "markhudnall.core"
                          :asset-path "/js/out"
                          :source-map "resources/public/js/main.js.map"
                          :optimizations :whitespace ;; Optimized by Optimus
                          :output-to "resources/public/js/main.js"
-                         :output-dir "resources/public/js/out-prod"}}]})
+                         :output-dir "resources/public/js/out-prod"}}
+             {:id "circles-prod"
+              :source-paths ["src/cljs/markhudnall" "src/cljs/sketches"]
+              :compiler {:main "sketches.core"
+                         :asset-path "/js/posts/circles_out-prod"
+                         :source-map "resources/public/js/posts/circles.js.map"
+                         :optimizations :whitespace ;; Optimized by Optimus
+                         :output-to "resources/public/js/posts/circles.js"
+                         :output-dir "resources/public/js/posts/circles_out-prod"}}]})

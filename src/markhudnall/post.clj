@@ -5,7 +5,11 @@
             [clojure.string :as string]))
 
 (defn parse-metadata [metadata filename]
-  (let [parsed-metadata (zipmap (keys metadata) (map first (vals metadata)))
+  ;; Unwrap one-element metadata values
+  (let [parsed-metadata (zipmap (keys metadata) (map (fn [val] (if (> 1 (count val))
+                                                                 (val)
+                                                                 (first val)))
+                                                     (vals metadata)))
         draft? (= (:draft parsed-metadata) "true")
         raw-date (:date parsed-metadata)
         parsed-date (f/parse raw-date)
@@ -13,6 +17,8 @@
     (-> parsed-metadata
         (assoc :permalink permalink)
         (assoc :date parsed-date)
+        ;; :runners should always be a list
+        (assoc :runners (:runners metadata))
         (dissoc :draft)
         (assoc :draft? draft?))))
 

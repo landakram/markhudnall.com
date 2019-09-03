@@ -11,6 +11,7 @@ pom.xml.asc
 .hg/
 out
 out-*
+*_out-*
 target
 lib
 classes

@@ -1,0 +1,6 @@
+{:main "sketches.core"
+ :asset-path "/js/posts/circles_out"
+ :source-map true
+ :optimizations :none
+ :output-to "resources/public/js/posts/circles.js"
+ :output-dir "resources/public/js/posts/circles_out"}

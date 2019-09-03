@@ -2,6 +2,7 @@
   (:require [stasis.core :as stasis]
             [clojure.string :as string]
             [markdown.core :as markdown]
+            [clojure.java.io :as io]
             [optimus.assets :as assets]
             [optimus.export]
             [optimus.optimizations :as optimizations]
@@ -42,6 +43,12 @@
                {:name "LinkedIn"
                :url "https://www.linkedin.com/in/mark-hudnall-5bb82b1b"}]})
 
+(defn filtered-list-files [dir regexp]
+  (let [dir (io/as-file dir)]
+    (->> (.listFiles dir)
+         (map #(.getPath %))
+         (filter #(re-find regexp %)))))
+
 (defn get-assets []
   (concat
    (assets/load-bundles "public"
@@ -50,11 +57,12 @@
                           ["/js/highlight.pack.js"
                            "/js/main.js"]}
                          (map
-                          (fn [[path contents]]
-                            {(str "posts-" (last (string/split path #"/")))
-                             ["/js/highlight.pack.js"
-                              (str "/js/posts" path)]})
-                          (stasis/slurp-directory "resources/public/js/posts/" #".js$"))))
+                          (fn [path]
+                            (let [filename (last (string/split path #"/"))]
+                              {(str "posts-" filename)
+                               ["/js/highlight.pack.js"
+                                (str "/js/posts/" filename)]}))
+                          (filtered-list-files "resources/public/js/posts/" #"\.js$"))))
    (assets/load-assets "public" [#"/css/.*"])
    (assets/load-assets "public" [#"/img/.*"])))
 
