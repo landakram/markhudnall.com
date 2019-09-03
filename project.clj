@@ -66,7 +66,7 @@
               :source-paths ["src/cljs/markhudnall" "src/cljs/sketches"]
               :compiler {:main "sketches.core"
                          :asset-path "/js/posts/circles_out-prod"
-                         :source-map "resources/public/js/posts/circles.js.map"
+                         :source-map "resources/public/js/posts/widening-circles.js.map"
                          :optimizations :whitespace ;; Optimized by Optimus
-                         :output-to "resources/public/js/posts/circles.js"
-                         :output-dir "resources/public/js/posts/circles_out-prod"}}]})
+                         :output-to "resources/public/js/posts/widening-circles.js"
+                         :output-dir "resources/public/js/posts/widening-circles_out-prod"}}]})
