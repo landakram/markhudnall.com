@@ -1,7 +1,7 @@
 (ns markhudnall.pages
-  (require [markhudnall.layout :as layout]
-           [markhudnall.post :as post]
-           [markdown.core :as markdown]))
+  (:require [markhudnall.layout :as layout]
+            [markhudnall.post :as post]
+            [markdown.core :as markdown]))
 
 (defn about-page [me]
   (fn [req]
