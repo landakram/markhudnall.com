@@ -28,26 +28,27 @@
   :aliases {"build-site" ["do" 
                           "clean"
                           ["cljsbuild" "once" "production"] 
-                          ["run" "-m" "markhudnall.core/export"]]}
+                          ["run" "-m" "markhudnall.core/export"]]
+            "fig" ["trampoline" "run" "-m" "figwheel.main"]
+            "build-dev" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]}
 
   :source-paths ["src" "src/cljs"]
 
   :profiles {:dev 
              {:plugins [[lein-ring "0.12.5"]
-                        [lein-figwheel "0.5.18"]
                         [lein-cljsbuild "1.1.7"]]
               :dependencies [[ring/ring-mock "0.4.0"]
                              [ring/ring-devel "1.7.1"]
-                             [lein-figwheel "0.5.18"]
-                             [cider/piggieback "0.4.0"]
+                             [com.bhauman/figwheel-main "0.2.3"]
+                             [cider/piggieback "0.4.1"]
                              [org.clojure/tools.nrepl "0.2.13"]
                              [pjstadig/humane-test-output "0.9.0"]
-                             [org.clojure/clojurescript "1.10.339"]]}}
+                             [org.clojure/clojurescript "1.10.339"]]
+              :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}}}
 
   :cljsbuild {
     :builds [{:id "dev" 
               :source-paths ["src/cljs"]
-              :figwheel true
               :compiler {:main "markhudnall.core"
                          :asset-path "/js/out"
                          :source-map true
@@ -61,7 +62,4 @@
                          :source-map "resources/public/js/main.js.map"
                          :optimizations :whitespace ;; Optimized by Optimus
                          :output-to "resources/public/js/main.js"
-                         :output-dir "resources/public/js/out-prod"}}]
-  }
-
-  :figwheel {:ring-handler markhudnall.core/app })
+                         :output-dir "resources/public/js/out-prod"}}]})
