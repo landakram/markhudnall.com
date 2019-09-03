@@ -44,15 +44,24 @@
 
 (defn get-assets []
   (concat
-    (assets/load-bundle "public" 
-                        "main.js"
-                        ["/js/highlight.pack.js"
-                         "/js/main.js"])
-    (assets/load-assets "public" [#"/css/.*"])
-    (assets/load-assets "public" [#"/img/.*"])))
+   (assets/load-bundles "public"
+                        (into
+                         {"main.js"
+                          ["/js/highlight.pack.js"
+                           "/js/main.js"]}
+                         (map
+                          (fn [[path contents]]
+                            {(str "posts-" (last (string/split path #"/")))
+                             ["/js/highlight.pack.js"
+                              (str "/js/posts" path)]})
+                          (stasis/slurp-directory "resources/public/js/posts/" #".js$"))))
+   (assets/load-assets "public" [#"/css/.*"])
+   (assets/load-assets "public" [#"/img/.*"])))
 
 (defn get-posts []
-  (post/parse-many (stasis/slurp-directory "resources/posts" #".md$")))
+  (let [posts (concat
+               (stasis/slurp-directory "resources/posts" #".(md|sketch)$"))]
+    (post/parse-many posts)))
 
 (defn get-raw-pages []
   (let [posts (get-posts)

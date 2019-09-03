@@ -11,7 +11,7 @@
                  [reagent "0.8.1"]
                  [hiccup "1.0.5"]
                  [ring "1.7.1"]
-                 [markdown-clj "1.0.8"]
+                 [markdown-clj "1.10.0"]
                  [clj-time "0.15.1"]
                  [optimus "0.20.2"]
                  [ring/ring-headers "0.3.0"]

@@ -2,6 +2,7 @@
   (:require [hiccup.page :refer [html5 include-js include-css]]
             [optimus.link :as link]
             [clj-time.format :as f]
+            [clojure.string :as string]
             [markdown.core :as markdown]
             [markhudnall.post :as post]))
 
@@ -42,6 +43,8 @@
 
 (defn layout-page
   ([request title page]
+   (layout-page request title page ["main.js"]))
+  ([request title page js-includes]
    (html5
     [:head
      [:meta {:charset "utf-8"}]
@@ -59,23 +62,36 @@
       [:div.content
        [:article
         page]]]
-     (apply include-js (link/bundle-paths request ["main.js"]))
+     (apply include-js (link/bundle-paths request js-includes))
      [:script "hljs.initHighlightingOnLoad();"]
      (inject-analytics)]))
   ([request page] (layout-page request "Mark Hudnall" page)))
 
+(defn p-r [val]
+  (println val)
+  val)
+
 (defn layout-post [request post]
   (let [date (get-in post [:metadata :date])
         title (get-in post [:metadata :title])
+        permalink (get-in post [:metadata :permalink])
         formatted-date (format-date date)
-        content (:html post)]
+        content (:html post)
+        ;; "posts-<post-name>.js"
+        post-js-include (str "posts-" (last (string/split permalink #"/")) ".js")
+        custom-js-includes (link/bundle-paths
+                            request
+                            [post-js-include])
+        js-includes (if (empty? custom-js-includes) ["main.js"] [post-js-include])]
+    (println js-includes)
     (layout-page
       request
       (title-ify title)
       [:div
-        [:h1.post-title title]
-        [:time.post-date formatted-date]
-        content])))
+       [:h1.post-title title]
+       [:time.post-date formatted-date]
+       content]
+      js-includes)))
 
 (defn layout-post-li [post]
   (let [metadata (:metadata post)

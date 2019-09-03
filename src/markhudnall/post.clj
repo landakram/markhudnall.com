@@ -18,11 +18,13 @@
 
 (defn parse [[filename contents]]
   ; post => {:metadata {...} :html "..."}
-  (let [post (markdown/md-to-html-string-with-meta contents :footnotes? true)
+  (let [post (markdown/md-to-html-string-with-meta
+              contents
+              :footnotes? true
+              :inhibit-separator "%")
         metadata (:metadata post)
         ; {key [value]} => {key value}
-        parsed-metadata (parse-metadata metadata filename)
-        ]
+        parsed-metadata (parse-metadata metadata filename)]
     (-> post 
         (assoc :metadata parsed-metadata))))
 
