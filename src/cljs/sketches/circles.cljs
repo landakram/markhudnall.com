@@ -14,8 +14,8 @@
   val)
 
 (defn drunk-walk [val magnitude]
-  (let [mutating-fn #(if (< (rand) 0.5) + -)]
-    ((mutating-fn) val (* magnitude (q/noise val)))))
+  (let [operator #(if (< (rand) 0.5) + -)]
+    ((operator) val (* magnitude (q/noise val)))))
 
 (defn setup []
   (q/smooth)
@@ -47,13 +47,15 @@
    :y (drunk-walk (:y state) 5)})
 
 (defn draw-state [state]
-  (when (>= (:diameter state) 0)
-    ;; (js/console.log (clj->js state))
-    ;; (js/console.log (clj->js (:fill state)))
-    (q/fill (get-in state [:fill :r])
-            (get-in state [:fill :g])
-            (get-in state [:fill :b]))
-    (q/ellipse (:x state) (:y state) (:diameter state) (:diameter state))))
+  (if (>= (:diameter state) 0)
+    (do
+     ;; (js/console.log (clj->js state))
+     ;; (js/console.log (clj->js (:fill state)))
+     (q/fill (get-in state [:fill :r])
+             (get-in state [:fill :g])
+             (get-in state [:fill :b]))
+     (q/ellipse (:x state) (:y state) (:diameter state) (:diameter state)))
+    (q/no-loop)))
 
 (defn ^:export run-sketch [host]
   (q/defsketch circles
@@ -62,8 +64,10 @@
     :setup setup
     :update update-state
     :draw draw-state
+    :mouse-clicked (fn [] (run-sketch host))
     :middleware [m/fun-mode]))
 
 ;; Uncomment to reset the sketch:
-;; (js/console.clear)
-;; (run-sketch)
+;; (run-sketch "sketches-circles")
+
+

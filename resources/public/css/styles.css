@@ -193,3 +193,7 @@ img.emoji {
 article blockquote {
     font-style: italic;
 }
+
+article #sketches-circles canvas {
+    cursor: pointer;
+}
