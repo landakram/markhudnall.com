@@ -15,7 +15,7 @@ Runners:
 
 > -- Rainer Maria Rilke (translated by Joanna Macy and Anita Barrows)
     
-The following generate art piece is made by repeatedly drawing circles with smaller and smaller diameters. [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) is applied to both the colors and positions to produce some variation.
+The following generative art piece is made by repeatedly drawing circles with smaller and smaller diameters. [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) is applied to both the colors and positions to produce some variation.
 
 You can click the piece (or refresh the page) to see a new rendition of it.
 
