@@ -17,6 +17,13 @@ hr {
     border: 0; 
 }
 
+.hidden {
+    visibility: hidden;
+}
+.hidden:hover {
+    visibility: hidden;
+}
+
 a:link { 
     color: #4A60D6;
     text-decoration: none;
@@ -100,6 +107,7 @@ h1, h2, h3, h4, h5, h6 {
 
 article {
 }
+
 article img {
     max-width: 100%;
     width: 100%;
@@ -107,6 +115,10 @@ article img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+article blockquote {
+    font-style: italic;
 }
 
 pre {
@@ -181,19 +193,39 @@ img.emoji {
     margin-top: 2em;
 }
 
-.p5Canvas {
+.sketch {
+    position: relative;
+}
+
+.sketch canvas {
+    display: block;
     max-width: 100%;
     object-fit: cover;
 }
 
-.sketch {
-    
-}
-
-article blockquote {
-    font-style: italic;
-}
-
-article #sketches-circles canvas {
+.sketch .play-button {
+    position: absolute;
+    border: none;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    white-space: normal;
+    text-align: center;
+    background-color: #d3d3d3;
+    font-size: 2em;
     cursor: pointer;
+    opacity: 0.0;
+}
+
+.sketch .play-button.first-time {
+    opacity: 0.5;
+}
+
+.sketch .play-button.hidden:hover {
+    visibility: hidden;
+}
+
+.sketch .play-button:hover {
+    opacity: 0.8;
 }
