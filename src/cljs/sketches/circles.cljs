@@ -26,14 +26,7 @@
   (let [operator #(if (< (rand) 0.5) + -)]
     ((operator) val (* magnitude (q/noise val)))))
 
-(defn setup []
-  (q/smooth)
-  (q/frame-rate 30)
-  (q/stroke 0)
-  (q/stroke-weight 0.5)
-  ;; (q/no-stroke)
-  (q/background 240)
-  (q/no-fill)
+(defn initial-state []
   {:diameter (* 1.5 (q/height))
    :num (drunk-walk 1000 1)
    :fill {:r (rand 255)
@@ -42,23 +35,33 @@
    :x (center-x)
    :y (center-y)})
 
+(defn setup []
+  (q/smooth)
+  (q/frame-rate 30)
+  (q/stroke 0)
+  (q/stroke-weight 0.5)
+  ;; (q/no-stroke)
+  (q/background 240)
+  (q/no-fill)
+  (initial-state))
+
 (defn new-fill-color [prev-val]
   (let [new-val (drunk-walk prev-val 50)]
     (max 0 (min 255 new-val))))
 
 (defn update-state [state]
-  (when (<= (:diameter state) 0)
+  #_(when (<= (:diameter state) 0)
     (reset! running? false))
 
-  (if @running?
+  (if (<= (:diameter state) 0)
+    (initial-state)
     {:diameter (- (:diameter state) 3)
      :num (drunk-walk (:num state) 1)
      :fill {:r (new-fill-color (get-in state [:fill :r]))
             :g (new-fill-color (get-in state [:fill :g]))
             :b (new-fill-color (get-in state [:fill :b]))}
      :x (drunk-walk (:x state) 5)
-     :y (drunk-walk (:y state) 5)}
-    state))
+     :y (drunk-walk (:y state) 5)}))
 
 (defn draw-state [state]
   (when @running?
@@ -116,4 +119,7 @@
   (mount-root host))
 
 ;; Uncomment to reset the sketch:
+
 ;; (run-sketch "sketches-circles")
+
+
