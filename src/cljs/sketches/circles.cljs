@@ -7,9 +7,8 @@
             [quil.core :as q :include-macros true]
             [quil.middleware :as m]))
 
-(defonce sketch-args (r/atom nil))
-(defonce running? (r/atom false))
-(defonce ran-first? (r/atom false))
+(defonce my-state (atom {}))
+
 
 (defn center-x []
   (/ (q/width) 2))
@@ -90,7 +89,6 @@
     ))
 
 (defn draw-state [state]
-  (js/console.log @mode)
   (when @running?
     (do
       ;; (js/console.log (clj->js state))
@@ -105,7 +103,6 @@
           (q/stroke-weight 8))
         (= @mode :first-run)
         (do
-          (js/console.log (clj->js state))
           (q/stroke-weight 0.5)
           (q/fill (get-in state [:fill :r])
                   (get-in state [:fill :g])
@@ -129,40 +126,20 @@
      ;; :mouse-clicked (fn [] (run-sketch host))
      :middleware [m/fun-mode]))
 
-(defn canvas [run-count]
+(defn canvas [{:keys [run-sketch-fn width height]}]
   (r/create-class
     {:component-did-mount
      (fn [component]
-       (let [node (r/dom-node component)
-             width 700
-             height 750]
-         (run-it node width height)))
+       (let [node (r/dom-node component)]
+         (swap! sketch-args (fn [] {:host node :w width :h height}))
+         (run-sketch-fn @sketch-args)))
 
      :render
      (fn []
        [:div.canvas])}))
 
-(defn sketch []
-  [:div.sketch
-    [:button
-     {:class ["play-button"
-              (when @running? "hidden")
-              (when (not @ran-first?) "first-time")]
-      :on-click (fn []
-                  (js/console.log @running?)
-                  (js/console.log @ran-first?)
-                  (js/console.log @sketch-args)
-                  (reset! running? true)
-                  (reset! ran-first? true)
-                  (run-it (:host @sketch-args) (:w @sketch-args) (:h @sketch-args)))}
-     [:span "▶"]]
-    [canvas]])
-
-(defn mount-root [host]
-  (r/render [sketch] (.getElementById js/document host)))
-
-(defn ^:export run-sketch [host]
-  (mount-root host))
+(defn my-run-sketch-fn [sketch-args]
+  (run-it (:host sketch-args) (:w sketch-args) (:h sketch-args)))
 
 ;; Uncomment to reset the sketch:
 
