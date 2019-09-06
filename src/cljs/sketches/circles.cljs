@@ -8,8 +8,8 @@
             [quil.middleware :as m]))
 
 (defonce sketch-args (r/atom nil))
-(defonce running? (r/atom true))
-(defonce ran-first? (r/atom true))
+(defonce running? (r/atom false))
+(defonce ran-first? (r/atom false))
 
 (defn center-x []
   (/ (q/width) 2))
@@ -37,7 +37,7 @@
 
 (defn setup []
   (q/smooth)
-  (q/frame-rate 30)
+  (q/frame-rate 60)
   (q/stroke 0)
   (q/stroke-weight 0.5)
   ;; (q/no-stroke)
@@ -49,28 +49,73 @@
   (let [new-val (drunk-walk prev-val 50)]
     (max 0 (min 255 new-val))))
 
+(defn in? 
+  "true if coll contains elm"
+  [coll elm]  
+  (some #(= elm %) coll))
+
+(def x-mag (r/atom 5))
+(def y-mag (r/atom 5))
+
+(defonce mode (r/atom :forward))
 (defn update-state [state]
   #_(when (<= (:diameter state) 0)
-    (reset! running? false))
+      (reset! running? false))
 
-  (if (<= (:diameter state) 0)
-    (initial-state)
-    {:diameter (- (:diameter state) 3)
-     :num (drunk-walk (:num state) 1)
-     :fill {:r (new-fill-color (get-in state [:fill :r]))
-            :g (new-fill-color (get-in state [:fill :g]))
-            :b (new-fill-color (get-in state [:fill :b]))}
-     :x (drunk-walk (:x state) 5)
-     :y (drunk-walk (:y state) 5)}))
+  (cond
+    (in? [:forward :first-run] @mode) 
+    (do
+      (when (<= (:diameter state) 0)
+        (swap! mode (fn [prev-mode] (if (= prev-mode :forward) :reverse :forward))))
+      {:diameter (- (:diameter state) 3)
+       :num (drunk-walk (:num state) 1)
+       :fill {:r (new-fill-color (get-in state [:fill :r]))
+              :g (new-fill-color (get-in state [:fill :g]))
+              :b (new-fill-color (get-in state [:fill :b]))}
+       :x (drunk-walk (:x state) @x-mag)
+       :y (drunk-walk (:y state) @y-mag)}
+      )
+    (= @mode :reverse)
+    (do
+      (when (>= (:diameter state) (:diameter (initial-state)))
+        (swap! mode (fn [prev-mode] (if (= prev-mode :forward) :reverse :forward))))
+      {:diameter (+ (:diameter state) 3)
+       :num (drunk-walk (:num state) 1)
+       :fill {:r (new-fill-color (get-in state [:fill :r]))
+              :g (new-fill-color (get-in state [:fill :g]))
+              :b (new-fill-color (get-in state [:fill :b]))}
+       :x (drunk-walk (:x state) @x-mag)
+       :y (drunk-walk (:y state) @y-mag)}
+      )
+    ))
 
 (defn draw-state [state]
+  (js/console.log @mode)
   (when @running?
     (do
       ;; (js/console.log (clj->js state))
       ;; (js/console.log (clj->js (:fill state)))
-      (q/fill (get-in state [:fill :r])
-              (get-in state [:fill :g])
-              (get-in state [:fill :b]))
+      (cond
+        (= @mode :reverse)
+        (do
+          (q/no-fill)
+          (q/stroke (get-in state [:fill :r])
+                    (get-in state [:fill :g])
+                    (get-in state [:fill :b]))
+          (q/stroke-weight 8))
+        (= @mode :first-run)
+        (do
+          (js/console.log (clj->js state))
+          (q/stroke-weight 0.5)
+          (q/fill (get-in state [:fill :r])
+                  (get-in state [:fill :g])
+                  (get-in state [:fill :b])))
+        (= @mode :forward)
+        (do
+          (q/stroke-weight 8)
+          (q/stroke (get-in state [:fill :r])
+                  (get-in state [:fill :g])
+                  (get-in state [:fill :b]))))
       (q/ellipse (:x state) (:y state) (:diameter state) (:diameter state)))))
 
 (defn run-it [host w h]
@@ -92,6 +137,7 @@
              width 700
              height 750]
          (run-it node width height)))
+
      :render
      (fn []
        [:div.canvas])}))
