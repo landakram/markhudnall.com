@@ -1,10 +1,7 @@
 Title: Widening circles
 Date: 2019-09-02
 Runners:
-    sketches.core.run_sketches()
-
-TODO: Put this back
-sketches.circles.run_sketch("sketches-circles")
+    sketches.registry.run_sketches()
 
 > I live my life in widening circles  
 > that reach out across the world.  
@@ -23,6 +20,8 @@ The following generative art piece is made by repeatedly drawing circles with sm
 You can click the piece (or refresh the page) to see a new rendition of it.
 
 %<div class="sketch" id="sketches-circles"></div>%
+
+%<div class="sketch" id="sketches-circles-2"></div>%
 
 The piece was inspired by the first 2 chapters of [Generative Art](http://zenbullets.com/book.php) by Matt Pearson, which has been a joy. Some selected quotes from its prose:
 
