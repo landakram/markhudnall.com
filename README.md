@@ -22,6 +22,12 @@ git push dokku master
 
 I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/methods/dockerfiles/) to deploy it. That's a little weird because it means dokku's nginx server is proxying to another nginx server behind docker, but there's too much cognitive overhead to deploying things, and it's worth it to me to deploy stuff in a uniform way.
 
+## Developing
+
+Run `M-x cider-jack-in-clojurescript` with `fighweel-main`.
+
+Use a run configuration defined in .cljs.edn file that corresponds to the sketch that you want to run (`circles.cljs.edn` is a good example).
+
 ## Why not use a static site generator? 
 
 I wanted to learn / write more Clojure. That's basically it.
