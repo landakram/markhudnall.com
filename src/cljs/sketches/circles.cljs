@@ -90,8 +90,6 @@
 
 (defn draw-state [state]
   (do
-    ;; (js/console.log (clj->js state))
-    ;; (js/console.log (clj->js (:fill state)))
     (cond
       (= (:mode state) :reverse)
       (do

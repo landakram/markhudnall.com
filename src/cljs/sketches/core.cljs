@@ -5,7 +5,6 @@
             [sketches.circles :as circles]))
 
 ;; It would be nice to move these to the md file itself.
-
 (registry/register-sketch! {:id :circles
                             :host "sketches-circles"
                             :width 700

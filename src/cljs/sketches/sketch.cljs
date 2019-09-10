@@ -6,8 +6,6 @@
 (defn run-sketch [{:keys [id host width height state setup update-state draw-state] :as args}]
   (let [{:keys [running? ran-first? canvas-node]} @state]
     (let [pause #(swap! state assoc :running? false)]
-      (js/console.log (clj->js args))
-      (js/console.log (clj->js @state))
       (q/sketch
        :host canvas-node
        :size [width height]
@@ -27,9 +25,7 @@
     {:component-did-mount
      (fn [component]
        (let [node (r/dom-node component)]
-         (js/console.log (clj->js @state))
          (swap! state assoc :canvas-node node)
-         (js/console.log (clj->js @state))
          (run-sketch args)))
      :render
      (fn []
@@ -43,7 +39,6 @@
                (when running? "hidden")
                (when (not ran-first?) "first-time")]
        :on-click (fn []
-                   (js/console.log (clj->js state))
                    (swap! state assoc :running? true)
                    (swap! state assoc :ran-first? true)
                    (run-sketch args))}
