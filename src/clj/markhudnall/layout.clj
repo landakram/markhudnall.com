@@ -6,6 +6,9 @@
             [markdown.core :as markdown]
             [markhudnall.post :as post]))
 
+(def me
+  {:image "https://1.gravatar.com/avatar/6d07453a68471e4682e8daceef543820?size=300"})
+
 (defn format-date [date]
   (f/unparse (f/formatter "MMMM d, YYYY") date))
 
@@ -31,11 +34,9 @@
     [:nav.navigation
       [:ul
         [:li
-          [:a {:href "/"} "Home"]]
+          [:a {:href "/"} "About"]]
         [:li
-          [:a {:href "/about/"} "About"]]
-        [:li
-          [:a {:href "/archive/"} "Archive"]]
+          [:a {:href "/writing/"} "Writing"]]
         ]]])
 
 (defn title-ify [title]
@@ -129,17 +130,17 @@
                     name)]
     [:li link-html " " descr]))
 
-(defn layout-front-page [recent-posts projects]
+(defn layout-front-page [recent-posts]
   [:div
-   (markdown/md-to-html-string (slurp "resources/md/short-bio.md"))
-   [:h2 "Recent posts"]
-   (layout-recent-posts recent-posts)
-   [:h2 "Projects"]
-   [:ul
-    (map layout-project-li projects)]])
+   [:img.me {:src (:image me) :alt "Mark Hudnall"}]
+   [:section.bio
+    (markdown/md-to-html-string (slurp "resources/md/bio.md"))]
+   [:section.recent-posts
+    [:h2 "Recent posts"]
+    (layout-recent-posts recent-posts)]
+   [:section.projects
+    (markdown/md-to-html-string (slurp "resources/md/projects.md"))]
+   [:section.elsewhere
+    [:h2 "Elsewhere"]
+    (markdown/md-to-html-string (slurp "resources/md/elsewhere.md"))]])
 
-(defn layout-elsewhere [elsewhere]
-  [:ul
-    (map (fn [place] 
-          [:li [:a {:href (:url place)} (:name place)]]) 
-        elsewhere)])

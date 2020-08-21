@@ -3,33 +3,20 @@
             [markhudnall.post :as post]
             [markdown.core :as markdown]))
 
-(defn about-page [me]
+(defn writing-page [posts]
   (fn [req]
     (layout/layout-page
       req
-      (layout/title-ify "About")
-      [:div
-       [:img.me {:src (:image me) :alt "Mark Hudnall"}]
-       [:section.bio
-        (markdown/md-to-html-string (slurp "resources/md/bio.md"))]
-       [:section.elsewhere
-        [:h2 "Elsewhere"]
-        (layout/layout-elsewhere (:elsewhere me))]])))
-
-(defn archive-page [posts]
-  (fn [req]
-    (layout/layout-page
-      req
-      (layout/title-ify "Archive")
+      (layout/title-ify "Writing")
       [:div
        (layout/layout-archive-posts posts)])))
 
-(defn front-page [posts projects]
+(defn front-page [posts]
   (let [recent-posts (post/get-recent posts)]
     (fn [req]
       (layout/layout-page 
         req 
-        (layout/layout-front-page recent-posts projects)))))
+        (layout/layout-front-page recent-posts)))))
 
 (defn post-pages [posts]
   (->> posts 

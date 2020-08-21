@@ -18,47 +18,6 @@
 
 (def export-dir "dist")
 
-(def projects
-  [{:name "Serenity"
-    :homepage "https://serenity.markhudnall.com"
-    :short-description "is a P2P file transfer app in the browser"}
-   
-   {:name "Gridliner"
-    :homepage "https://gridliner.app"
-    :short-description "is a 2D outliner for freeform knowledge"}
-
-   {:name "Kiwi"
-    :homepage "https://github.com/landakram/kiwi"
-    :short-description "is a personal wiki you write in Markdown"}
-
-   {:name "plaid-cli"
-    :homepage "https://github.com/landakram/plaid-cli"
-    :short-description "is a CLI tool for working with the Plaid API"}
-
-   {:name "gdax_recurring"
-    :homepage "https://github.com/landakram/gdax_recurring"
-    :short-description "is a CLI script to automate recurring USD deposits and asset allocation for Coinbase Pro"}
-
-   {:name "Clef"
-    :homepage "https://web.archive.org/web/20161108070329/https://getclef.com/"
-    :short-description "was a better way to log in online"}
-   
-   {:name "Instant2FA"
-    :homepage "https://www.producthunt.com/posts/instant-2fa"
-    :short-description "was a drop-in 2FA integration"}
-   ])
-
-(def me
-  {:image "http://1.gravatar.com/avatar/6d07453a68471e4682e8daceef543820?size=300"
-   :elsewhere [{:name "GitHub"
-               :url "https://github.com/landakram"}
-               {:name "Twitter"
-               :url "https://twitter.com/landakram"}
-               {:name "Keybase"
-               :url "https://keybase.io/landakram"}
-               {:name "LinkedIn"
-               :url "https://www.linkedin.com/in/mark-hudnall-5bb82b1b"}]})
-
 (defn filtered-list-files [dir regexp]
   (let [dir (io/as-file dir)]
     (->> (.listFiles dir)
@@ -98,11 +57,9 @@
                           (reverse))]
     (stasis/merge-page-sources
       {:front-page
-       {"/" (pages/front-page sorted-posts projects)}
-       :about-page
-       {"/about/" (pages/about-page me)}
-       :archive-page
-       {"/archive/" (pages/archive-page sorted-posts)}
+       {"/" (pages/front-page sorted-posts)}
+       :writing-page
+       {"/writing/" (pages/writing-page sorted-posts)}
        :posts
        (pages/post-pages sorted-posts)})))
 
