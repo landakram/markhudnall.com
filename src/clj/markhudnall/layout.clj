@@ -125,7 +125,7 @@
         descr (:short-description project)
         live? (not (nil? href))
         link-html (if live?
-                    [:a {:href href} name]
+                    [:a {:href href :target "_blank"} name]
                     name)]
     [:li link-html " " descr]))
 
