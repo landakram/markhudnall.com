@@ -14,10 +14,13 @@
        :setup (fn []
                 (let [state (setup)]
                   (assoc state :pause pause)))
-       :update update-state
-       :draw (fn [state]
-               (when running?
-                 (draw-state state)))
+       :update (fn [s]
+                 (if (:running? @state)
+                   (update-state s)
+                   s))
+       :draw (fn [s]
+               (when (:running? @state)
+                 (draw-state s)))
        :middleware [m/fun-mode]))))
 
 
@@ -32,26 +35,28 @@
      (fn []
        [:div.canvas])}))
 
-(defn sketch [{:keys [id width height state] :as args}]
-  (let [{:keys [running? ran-first?]} @state]
-    [:div.sketch
-     [:button
-      {:class ["play-button"
-               (when running? "hidden")
-               (when (not ran-first?) "first-time")]
-       :on-click (fn []
-                   (swap! state assoc :running? true)
-                   (swap! state assoc :ran-first? true)
-                   (run-sketch args))}
-      [:span "▶"]]
-     [canvas args]]))
-
-(defn empty-state []
+(defn empty-state [running?]
   {:canvas-node nil
-   :running? false
-   :ran-first? false})
+   :running? running?
+   :ran-first? running?})
+
+(defn sketch [{:keys [id width height auto-run] :or {running? false} :as args}]
+  (let [state (r/atom (empty-state auto-run))]
+    (fn [{:keys [id width height] :as args}]
+      (let [{:keys [running? ran-first?]} @state
+            args (assoc args :state state)]
+        [:div.sketch
+         [:button
+          {:class ["play-button"
+                   (when running? "hidden")
+                   (when (not ran-first?) "first-time")]
+           :on-click (fn []
+                       (swap! state assoc :running? true)
+                       (swap! state assoc :ran-first? true)
+                       (run-sketch args))}
+          [:span "▶"]]
+         [canvas args]]))))
 
 (defn mount-root [args]
-  (let [state (r/atom (empty-state))]
-    (dom/render [sketch (assoc args :state state)]
-                (.getElementById js/document (:host args)))))
+  (dom/render [sketch args]
+              (.getElementById js/document (:host args))))

@@ -19,8 +19,6 @@ You can click the piece (or refresh the page) to see a new rendition of it.
 
 %<div class="sketch" id="sketches-circles"></div>%
 
-%<div class="sketch" id="sketches-circles-2"></div>%
-
 The piece was inspired by the first 2 chapters of [Generative Art](http://zenbullets.com/book.php) by Matt Pearson, which has been a joy. Some selected quotes from its prose:
 
 1.

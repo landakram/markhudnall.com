@@ -51,7 +51,7 @@
 (def y-mag 3)
 
 (defn update-state [state]
-  #_(when (<= (:diameter state) 0)
+  (when (<= (:diameter state) 0)
     ((:pause state)))
 
   (cond

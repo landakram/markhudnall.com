@@ -8,5 +8,5 @@
   (doseq [sketch @sketches]
     (sketch/mount-root sketch)))
 
-(defn register-sketch! [{:keys [name host run-sketch-fn width height] :as sketch}]
+(defn register-sketch! [sketch]
   (swap! sketches #(conj % sketch)))
