@@ -1,7 +1,5 @@
 Title: Widening circles
 Date: 2019-09-02
-Runners:
-    sketches.registry.run_sketches()
 
 > I live my life in widening circles  
 > that reach out across the world.  

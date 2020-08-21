@@ -15,7 +15,7 @@ make build
 If, for whatever reason, you then wanted to *deploy* my personal website on your own server, you could do so with dokku:
 
 ```shell
-# Assuming you already ran `lein build-site`
+# Assuming you already ran `make build`
 git remote add dokku dokku@your-dokku-host
 git push dokku master
 ```
@@ -24,9 +24,8 @@ I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/met
 
 ## Developing
 
-Run `M-x cider-jack-in-clojurescript` with `fighweel-main`.
-
-Use a run configuration defined in .cljs.edn file that corresponds to the sketch that you want to run (`circles.cljs.edn` is a good example).
+1. Run `M-x cider-jack-in-clojurescript` with `shadow-cljs`.
+2. Run `lein ring server`.
 
 ## Why not use a static site generator? 
 
@@ -34,7 +33,7 @@ I wanted to learn / write more Clojure. That's basically it.
 
 ## License
 
-Copyright © 2015 Mark Hudnall
+Copyright © 2020 Mark Hudnall
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

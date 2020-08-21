@@ -1,5 +1,6 @@
 (ns sketches.sketch
   (:require [reagent.core :as r]
+            [reagent.dom :as dom]
             [quil.core :as q :include-macros true]
             [quil.middleware :as m]))
 
@@ -24,7 +25,7 @@
   (r/create-class
     {:component-did-mount
      (fn [component]
-       (let [node (r/dom-node component)]
+       (let [node (dom/dom-node component)]
          (swap! state assoc :canvas-node node)
          (run-sketch args)))
      :render
@@ -52,5 +53,5 @@
 
 (defn mount-root [args]
   (let [state (r/atom (empty-state))]
-    (r/render [sketch (assoc args :state state)]
-              (.getElementById js/document (:host args)))))
+    (dom/render [sketch (assoc args :state state)]
+                (.getElementById js/document (:host args)))))

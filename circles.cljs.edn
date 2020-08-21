@@ -1,6 +1,0 @@
-{:main "sketches.core"
- :asset-path "/js/posts/widening-circles_out"
- :source-map true
- :optimizations :none
- :output-to "resources/public/js/posts/widening-circles.js"
- :output-dir "resources/public/js/posts/widening-circles_out"}

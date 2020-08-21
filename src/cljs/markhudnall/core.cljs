@@ -4,6 +4,7 @@
   (:require [cljs.core.async :refer [chan put! <! timeout]]
             [dommy.core :as dommy]
             [clojure.set]
+            [reagent.dom :as dom]
             [reagent.core :as r]))
 
 (enable-console-print!)
@@ -58,10 +59,11 @@
         y (- (.-clientY e) (.-top dim))
         closest-cell-x (-> x
                            (/ cell-size)
-                           Math.floor)
+                           js/Math.floor)
         closest-cell-y (-> y
                            (/ cell-size)
-                           Math.floor)
+                           js/Math.floor)
+
         cell [closest-cell-x closest-cell-y]
         surrounding-cells (->> cell 
                                (neighbors)
@@ -86,7 +88,7 @@
                 :x (* x cell-size)
                 :y (* y cell-size)}])])))
 
-(r/render [component] (sel1 ".life-canvas"))
+(dom/render [component] (sel1 ".life-canvas"))
 
 (def wait-time 100)
 
