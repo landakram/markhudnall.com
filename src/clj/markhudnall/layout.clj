@@ -28,7 +28,7 @@
     })();"])
 
 (defn layout-header []
-  [:div.header
+  [:div.header.pointer-events
     [:div.logo
       [:a {:href "/"} "Mark Hudnall"]]
     [:nav.navigation
@@ -62,9 +62,9 @@
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
      [:div.life-canvas]
-     [:div.body
+     [:div.body.no-pointer-events
       (layout-header)
-      [:div.content
+      [:div.content.pointer-events
        [:article
         page]]]
      (apply include-js js-includes)

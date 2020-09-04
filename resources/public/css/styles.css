@@ -56,6 +56,14 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 720px;
 }
 
+.no-pointer-events {
+    pointer-events: none;
+}
+
+.pointer-events {
+    pointer-events: auto;
+}
+
 .content {
     padding: 5%;
     margin-bottom: 5em;
@@ -71,6 +79,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header {
+    pointer-events: auto;
     margin: 2em 2em;
     display: flex;
     flex-direction: row;

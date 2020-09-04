@@ -54,9 +54,8 @@
 
 (defn handle-canvas-click [e]
   (let [target (.-target e)
-        dim (.getBoundingClientRect target)
-        x (- (.-clientX e) (.-left dim))
-        y (- (.-clientY e) (.-top dim))
+        x (.-pageX e)
+        y (.-pageY e)
         closest-cell-x (-> x
                            (/ cell-size)
                            js/Math.floor)
@@ -69,7 +68,8 @@
                                (neighbors)
                                ((apply comp (repeat 4 #(distinct-mapcat neighbors %))))
                                (filter rand-bool))]
-    (swap! state #(clojure.set/union % (set surrounding-cells)))))
+    (when (= (.-buttons e) 1)
+      (swap! state #(clojure.set/union % (set surrounding-cells))))))
 
 
 (defn component []
@@ -79,7 +79,8 @@
       [:svg {:width (str width) 
              :height (str height) 
              :viewBox (str "0 " "0 " width " " height)
-             :on-click handle-canvas-click}
+             :on-mouse-down handle-canvas-click
+             :on-mouse-move handle-canvas-click}
       (for [[x y] @state]
         [:rect {:key (str "x" x "y" y)
                 :width cell-size
