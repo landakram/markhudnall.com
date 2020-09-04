@@ -131,6 +131,14 @@ pre {
     border-radius: 5px;
 }
 
+code {
+    border-radius: 5px;
+    border: solid 1px;
+    padding: 0.3em;
+    border-color: #E6E6E6;
+    background-color: #E6E6E6;
+}
+
 .emoji {
     width: 1em;
     height: 1em;
