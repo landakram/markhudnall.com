@@ -6,8 +6,9 @@
 
   :dependencies [[org.clojure/clojure "1.10.1"]
                  [stasis "2.4.0"]
-                 [hiccup "1.0.5"]
+                 [hiccup "2.0.0-alpha2"]
                  [ring "1.7.1"]
+                 [clj-rss "0.2.5"]
                  [markdown-clj "1.10.0"]
                  [clj-time "0.15.1"]
                  [optimus "0.20.2"]

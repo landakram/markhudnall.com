@@ -1,5 +1,6 @@
 (ns markhudnall.layout
   (:require [hiccup.page :refer [html5 include-js include-css]]
+            [hiccup.util :refer [raw-string]]
             [optimus.link :as link]
             [clj-time.format :as f]
             [clojure.string :as string]
@@ -37,6 +38,8 @@
           [:a {:href "/"} "About"]]
         [:li
           [:a {:href "/writing/"} "Writing"]]
+        [:li
+          [:a {:href "/rss.xml"} "RSS"]]
         ]]])
 
 (defn title-ify [title]

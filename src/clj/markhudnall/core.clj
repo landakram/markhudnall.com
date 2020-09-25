@@ -3,6 +3,8 @@
             [clojure.string :as string]
             [markdown.core :as markdown]
             [clojure.java.io :as io]
+            [clj-rss.core :as rss]
+            [clj-time.coerce :refer [to-date]]
             [optimus.assets :as assets]
             [optimus.export]
             [optimus.optimizations :as optimizations]
@@ -49,19 +51,39 @@
                (stasis/slurp-directory "resources/posts" #".(md|sketch)$"))]
     (post/parse-many posts)))
 
+(defn rss-feed [posts]
+  (let [title "Mark Hudnall's website"
+        link "https://markhudnall.com"
+        description "Mark Hudnall's piece of cyberspace"]
+    (rss/channel-xml
+     {:title title
+      :link link
+      :description description}
+     (map
+      (fn [{:keys [metadata] :as post}]
+        {:title (:title metadata)
+         :link (str link (post/get-full-path post))
+         :pubDate (-> metadata :date to-date)})
+      posts))))
+
+(defn sort-posts [posts]
+  (->> posts
+       (filter #(not (get-in % [:metadata :draft?])))
+       (sort-by #(get-in % [:metadata :date]))
+       (reverse)))
+
 (defn get-raw-pages []
   (let [posts (get-posts)
-        sorted-posts (->> posts
-                          (filter #(not (get-in % [:metadata :draft?])))
-                          (sort-by #(get-in % [:metadata :date]))
-                          (reverse))]
+        sorted-posts (sort-posts posts)]
     (stasis/merge-page-sources
       {:front-page
        {"/" (pages/front-page sorted-posts)}
        :writing-page
        {"/writing/" (pages/writing-page sorted-posts)}
        :posts
-       (pages/post-pages sorted-posts)})))
+       (pages/post-pages sorted-posts)
+       :rss
+       {"/rss.xml" (rss-feed sorted-posts)}})))
 
 (defn prepare-page [page req]
   (if (string? page) 
