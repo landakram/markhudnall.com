@@ -20,7 +20,6 @@
 (def number-of-rows 110)
 (def cell-size 5)
 
-
 (defn rand-bool [& args] (zero? (rand-int 5)))
 
 (defonce state (r/atom #{}))
@@ -92,16 +91,14 @@
                 :y (* y cell-size)}])])))
 
 (defn hook-footnotes []
-  (doseq [footnote-el (-> (sel1 ".footnotes") .-childNodes (js/Array.from))]
+  (doseq [footnote-el (some-> (sel1 ".footnotes") .-childNodes (js/Array.from))]
     (let [footnote-ref (-> footnote-el .-lastChild .-hash sel1)
           hover-note (js/document.createElement "div")]
 
-      (js/console.log hover-note)
       (.add hover-note.classList "bg-gray-700" "p-4" "mx-4" "rounded-md" "shadow-md")
       (doseq [c (-> footnote-el .-childNodes js/Array.from)]
         (.appendChild hover-note (.cloneNode c true)))
 
-      (js/console.log "footnote-ref" footnote-ref)
       (tippy footnote-ref #js {:content hover-note
                                :interactive true
                                :arrow false
@@ -114,7 +111,6 @@
 (dom/render [game-of-life] (sel1 ".life-canvas"))
 
 (def wait-time 100)
-
 (defonce game (go-loop []
   (<! (timeout wait-time))
   (swap! state build-grid)
