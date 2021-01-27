@@ -26,6 +26,7 @@ I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/met
 
 1. Run `M-x cider-jack-in-clojurescript` with `shadow-cljs`.
 2. Run `lein ring server`.
+3. Run `NODE_ENV=development npx brunch watch`
 
 ## Why not use a static site generator? 
 

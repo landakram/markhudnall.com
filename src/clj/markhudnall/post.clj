@@ -26,6 +26,7 @@
   ; post => {:metadata {...} :html "..."}
   (let [post (markdown/md-to-html-string-with-meta
               contents
+              :heading-anchors true
               :footnotes? true
               :inhibit-separator "%")
         metadata (:metadata post)

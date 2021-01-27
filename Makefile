@@ -8,7 +8,7 @@ build-js: clean
 
 build-site:
 	lein run -m markhudnall.core/export
-	
+
 build: clean build-js build-site
 
 run:

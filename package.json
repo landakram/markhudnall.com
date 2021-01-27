@@ -3,6 +3,17 @@
     "create-react-class": "^15.6.3",
     "p5": "^1.1.9",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "tippy.js": "^6.2.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "autoprefixer": "^9.8.6",
+    "brunch": "^3.0.0",
+    "cssnano": "^4.1.10",
+    "postcss": "^7.0.35",
+    "postcss-brunch": "^3.0.0",
+    "postcss-import": "^10.0.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
   }
 }

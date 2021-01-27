@@ -1,0 +1,24 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "./tomorrow-night-eighties.css";
+
+@import "./styles.css";
+
+/* Tippy styles and overrides */
+.tippy-box[data-animation=fade][data-state=hidden]{
+    opacity:0;
+}
+
+.tippy-box {
+    @apply outline-none;
+}
+
+.tippy-box:focus {
+    @apply outline-none;
+}
+
+.tippy-box:active {
+    @apply outline-none;
+}

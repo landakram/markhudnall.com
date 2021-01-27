@@ -5,7 +5,9 @@
             [dommy.core :as dommy]
             [clojure.set]
             [reagent.dom :as dom]
-            [reagent.core :as r]))
+            [reagent.core :as r]
+            ["tippy.js" :default tippy]
+            ))
 
 (enable-console-print!)
 
@@ -72,7 +74,7 @@
       (swap! state #(clojure.set/union % (set surrounding-cells))))))
 
 
-(defn component []
+(defn game-of-life []
   (fn []
     (let [width (.-offsetWidth js/document.body)
           height (.-offsetHeight js/document.body)]
@@ -89,7 +91,27 @@
                 :x (* x cell-size)
                 :y (* y cell-size)}])])))
 
-(dom/render [component] (sel1 ".life-canvas"))
+(defn hook-footnotes []
+  (doseq [footnote-el (-> (sel1 ".footnotes") .-childNodes (js/Array.from))]
+    (let [footnote-ref (-> footnote-el .-lastChild .-hash sel1)
+          hover-note (js/document.createElement "div")]
+
+      (js/console.log hover-note)
+      (.add hover-note.classList "bg-gray-700" "p-4" "mx-4" "rounded-md" "shadow-md")
+      (doseq [c (-> footnote-el .-childNodes js/Array.from)]
+        (.appendChild hover-note (.cloneNode c true)))
+
+      (js/console.log "footnote-ref" footnote-ref)
+      (tippy footnote-ref #js {:content hover-note
+                               :interactive true
+                               :arrow false
+                               :duration #js [200 200]
+                               :maxWidth 720
+                               :allowHTML true}))))
+
+(hook-footnotes)
+
+(dom/render [game-of-life] (sel1 ".life-canvas"))
 
 (def wait-time 100)
 
@@ -98,5 +120,3 @@
   (swap! state build-grid)
   (recur)))
 
-;(reset! state (build-initial-grid number-of-rows rand-bool))
-;(reset! state #{})

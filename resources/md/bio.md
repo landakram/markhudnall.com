@@ -1,4 +1,4 @@
-Hi, I'm Mark 👋
+Hi, I'm Mark.
 
 I'm an engineer, people manager, and founder interested in empowering technologies.
 

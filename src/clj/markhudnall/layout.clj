@@ -29,11 +29,11 @@
     })();"])
 
 (defn layout-header []
-  [:div.header.pointer-events
+  [:div.header.pointer-events.flex.flex-row.justify-between.items-center
     [:div.logo
-      [:a {:href "/"} "Mark Hudnall"]]
+     [:a {:href "/"} [:img {:src "/img/logo-circle.svg"}]]]
     [:nav.navigation
-      [:ul
+      [:ul.space-x-half
         [:li
           [:a {:href "/"} "About"]]
         [:li
@@ -65,9 +65,9 @@
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
      [:div.life-canvas]
-     [:div.body.no-pointer-events
+     [:div.body.no-pointer-events.space-y-two.my-one.flex.flex-col.justify-center.mx-auto.p-one
       (layout-header)
-      [:div.content.pointer-events
+      [:div.prose.content.pointer-events
        [:article
         page]]]
      (apply include-js js-includes)
@@ -94,8 +94,8 @@
       request
       (title-ify title)
       [:div
-       [:h1.post-title title]
-       [:time.post-date formatted-date]
+       [:h1.post-title.mb-0 title]
+       [:time.post-date.text-gray-600.italic.mb-one.inline-block formatted-date]
        content]
       js-includes)))
 
@@ -114,13 +114,13 @@
         date (get-in post [:metadata :date])
         formatted-date (format-date date)
         path (post/get-full-path post)]
-    [:li 
+    [:li.p-0.list-none.mx-0
      [:div
-      [:h2.post-title [:a {:href path} title]]
-      [:p.post-date [:time formatted-date]] ]]))
+      [:h2.post-title.mb-0 [:a {:href path} title]]
+      [:p.post-date.text-gray-600.italic [:time formatted-date]] ]]))
 
 (defn layout-archive-posts [posts]
-  [:ul.archive
+  [:ul.list-none.mx-0.archive
    (map layout-archive-li posts)])
 
 (defn layout-project-li [project]
@@ -135,7 +135,6 @@
 
 (defn layout-front-page [recent-posts]
   [:div
-   [:img.me {:src (:image me) :alt "Mark Hudnall"}]
    [:section.bio
     (markdown/md-to-html-string (slurp "resources/md/bio.md"))]
    [:section.recent-posts

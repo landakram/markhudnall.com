@@ -5,12 +5,12 @@ Date: 2019-09-02
 > that reach out across the world.  
 > I may not complete this last one  
 > but I give myself to it.  
-
+>
 > I circle around God, around the primordial tower.  
 > I’ve been circling for thousands of years  
 > and I still don’t know: am I a falcon,  
 > a storm, or a great song?  
-
+>
 > -- Rainer Maria Rilke (translated by Joanna Macy and Anita Barrows)
     
 The following generative art piece is made by repeatedly drawing circles with smaller and smaller diameters. [Perlin noise](https://en.wikipedia.org/wiki/Perlin_noise) is applied to both the colors and positions to produce some variation.
