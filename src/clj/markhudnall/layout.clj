@@ -145,6 +145,12 @@
     (markdown/md-to-html-string (slurp "resources/md/bio.md"))]
    [:section.recent-posts
     [:h2 "Recent posts"]
+    [:blockquote
+     [:p "Writing is nature's way of letting you know how sloppy your thinking is."]
+     [:p "– Dick Guindon"]]
+    [:blockquote
+     [:p "Mathematics is nature's way of letting you know how sloppy your writing is."]
+     [:p "– Leslie Lamport"]]
     (layout-recent-posts recent-posts)]
    [:section.projects
     (markdown/md-to-html-string (slurp "resources/md/projects.md"))]

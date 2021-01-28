@@ -5,7 +5,7 @@ module.exports = {
   },
   important: true,
   purge: {
-    content: ['./**/*.clj', './**/*/*.cljs'],
+    content: ['./**/*.clj', './**/*/*.cljs', './**/*/*.md'],
   },
   theme: {
     fontFamily: {
