@@ -12,6 +12,8 @@ If you want your *very own* copy of my personal website, you can clone it and bu
 make build
 ```
 
+This also starts a local server with the production build at [localhost:3001](http://localhost:3001).
+
 If, for whatever reason, you then wanted to *deploy* my personal website on your own server, you could do so with dokku:
 
 ```shell
@@ -24,9 +26,11 @@ I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/met
 
 ## Developing
 
+Development is done in Emacs.
+
 1. Run `M-x cider-jack-in-clojurescript` with `shadow-cljs`.
-2. Run `lein ring server`.
-3. Run `NODE_ENV=development npx brunch watch`
+2. Run `M-x cider-jack-in` with `lein`. This will automatically start a development server at [localhost:3000](http://localhost:3000).
+3. Run `M-x compile` with `NODE_ENV=development npx brunch watch`
 
 ## Why not use a static site generator? 
 

@@ -12,13 +12,15 @@ build-js: clean
 build-site:
 	lein run -m markhudnall.core/export
 
-build: clean build-css build-js build-site
+test-build:
+	python3 -m http.server --directory dist/ 3001
 
-run:
-	lein ring server
+build: clean build-css build-js build-site test-build
 
 run-js:
 	shadow-cljs watch app
 
 deploy:
 	git push dokku master
+
+

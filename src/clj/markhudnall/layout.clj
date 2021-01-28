@@ -2,6 +2,7 @@
   (:require [hiccup.page :refer [html5 include-js include-css]]
             [hiccup.util :refer [raw-string]]
             [optimus.link :as link]
+            [clj-time.core :as t]
             [clj-time.format :as f]
             [clojure.string :as string]
             [markdown.core :as markdown]
@@ -79,6 +80,11 @@
   (println val)
   val)
 
+(defn old-post-warning []
+  [:fieldset.border-2.border-solid.border-yellow-300.text-yellow-300.opacity-70.p-4.mb-one
+   [:legend.px-2 "⚠️"]
+   [:p.m-0.p-0 "This post is over 2 years old. A lot has changed since then! Take these words with a grain of salt and some patience with past me, who no longer exists."]])
+
 (defn layout-post [request post]
   (let [date (get-in post [:metadata :date])
         title (get-in post [:metadata :title])
@@ -88,14 +94,14 @@
         ;; "posts-<post-name>.js"
         post-js-include (str "posts-" (last (string/split permalink #"/")) ".js")
         js-includes (link/bundle-paths request ["main.js" post-js-include])]
-    (println post-js-include)
-    (println js-includes)
     (layout-page
       request
       (title-ify title)
       [:div
        [:h1.post-title.mb-0 title]
        [:time.post-date.text-gray-600.italic.mb-one.inline-block formatted-date]
+       (when (t/before? date (t/ago (t/years 2)))
+         (old-post-warning))
        content]
       js-includes)))
 

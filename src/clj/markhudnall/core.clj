@@ -14,6 +14,9 @@
             [clojure.java.io :as io]
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.default-charset :refer [wrap-default-charset]]
+            [ring.adapter.jetty :refer [run-jetty]]
+            [ring.middleware.reload :refer [wrap-reload]]
+            [ring.logger.timbre :refer [wrap-with-logger]]
             [markhudnall.pages :as pages]
             [markhudnall.layout :as layout]
             [markhudnall.post :as post]))
@@ -103,7 +106,19 @@
                optimizations/none
                serve-live-assets)
              (wrap-content-type)
-             (wrap-default-charset "UTF-8")))
+             (wrap-default-charset "UTF-8")
+             (wrap-with-logger)))
+
+(defonce dev-server (atom nil))
+
+(defn start-dev-server! []
+  (let [reloading-app (wrap-reload #'app)] 
+    (->> (run-jetty reloading-app {:port 3000 :join? false})
+         (reset! dev-server))))
+
+(defn stop-dev-server! []
+  (when-let [d @dev-server]
+    (.stop d)))
 
 (defn load-export-dir []
   (stasis/slurp-directory export-dir #"\.[^.]+$"))
