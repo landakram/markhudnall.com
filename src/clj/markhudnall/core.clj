@@ -63,10 +63,11 @@
       :link link
       :description description}
      (map
-      (fn [{:keys [metadata] :as post}]
+      (fn [{:keys [metadata html] :as post}]
         {:title (:title metadata)
          :link (str link (post/get-full-path post))
-         :pubDate (-> metadata :date to-date)})
+         :pubDate (-> metadata :date to-date)
+         :description (str "<![CDATA[" html "]]>")})
       posts))))
 
 (defn sort-posts [posts]
