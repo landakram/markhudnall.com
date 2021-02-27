@@ -1,4 +1,4 @@
-Title: Understanding Nix
+Title: First impressions of Nix
 Date: 2021-01-27
 Draft: false
 

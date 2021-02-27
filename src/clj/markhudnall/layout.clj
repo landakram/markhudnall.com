@@ -151,7 +151,10 @@
     [:blockquote
      [:p "Mathematics is nature's way of letting you know how sloppy your writing is."]
      [:p "– Leslie Lamport"]]
-    (layout-recent-posts recent-posts)]
+    (layout-recent-posts recent-posts)
+    [:p "See more of my writing " 
+     [:a {:href "/writing/"} "here"]
+     "."]]
    [:section.projects
     (markdown/md-to-html-string (slurp "resources/md/projects.md"))]
    [:section.elsewhere
