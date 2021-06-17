@@ -11,7 +11,7 @@
     "autoprefixer": "^9.8.6",
     "brunch": "^3.0.0",
     "cssnano": "^4.1.10",
-    "postcss": "^7.0.35",
+    "postcss": "^7.0.36",
     "postcss-brunch": "^3.0.0",
     "postcss-import": "^10.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
