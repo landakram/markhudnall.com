@@ -43,6 +43,7 @@
                                [(str "/js/" filename)]}))
                           (filtered-list-files "resources/public/js/" #"posts-.*\.js$"))))
    (assets/load-assets "public" [#"/css/.*"])
+   (assets/load-assets "public" [#"/kram/.*"])
    (try
      (assets/load-assets "public" [#"\.js\.map$"])
      ;; Source maps do not exist for production builds.
