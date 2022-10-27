@@ -1,0 +1,24 @@
+{
+  "name": "Landakram's Lambda Crown",
+  "external_url": "https://markhudnall.com/",
+  "image": "https://markhudnall.com/kram/1.png",
+  "description": "A circular lambda crown that bestows certain abilities upon its wearer.",
+  "attributes": [
+    {
+      "trait_type": "Charisma",
+      "value": 7
+    },
+    {
+      "trait_type": "Intellect",
+      "value": 10
+    },
+    {
+      "trait_type": "Strength",
+      "value": 8
+    },
+    {
+      "trait_type": "Spirit",
+      "value": 11
+    }
+  ]
+}
