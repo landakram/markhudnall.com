@@ -63,6 +63,9 @@
      ; Load fonts from typekit
      [:script {:src "https://use.typekit.net/ues0olh.js"}]
      [:script "try{Typekit.load({ async: false });}catch(e){}"]
+     ; Load MathJax
+     [:script {:src "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"}]
+     ; Load stylesheet
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
      [:div.life-canvas]
