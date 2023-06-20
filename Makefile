@@ -4,7 +4,7 @@ clean:
 	find resources/public/js -name "*.js.map" | xargs -r rm
 
 build-css:
-	NODE_ENV=production npx brunch build -p -j 10
+	npm run build
 
 build-js: clean
 	npx shadow-cljs release app

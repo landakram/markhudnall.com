@@ -30,7 +30,7 @@ Development is done in Emacs.
 
 1. Run `M-x cider-jack-in-clojurescript` with `shadow-cljs`.
 2. Run `M-x cider-jack-in` with `lein`. This will automatically start a development server at [localhost:3000](http://localhost:3000).
-3. Run `M-x compile` with `NODE_ENV=development npx brunch watch`
+3. Run `M-x compile` with `npm run dev`
 
 ## Why not use a static site generator? 
 

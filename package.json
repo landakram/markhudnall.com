@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development --watch"
+  },
   "dependencies": {
     "create-react-class": "^15.6.3",
     "p5": "^1.1.9",
@@ -7,13 +11,15 @@
     "tippy.js": "^6.2.7"
   },
   "devDependencies": {
-    "@tailwindcss/postcss7-compat": "^2.0.2",
-    "autoprefixer": "^9.8.6",
-    "brunch": "^3.0.0",
-    "cssnano": "^4.1.10",
-    "postcss": "^7.0.35",
-    "postcss-brunch": "^3.0.0",
-    "postcss-import": "^10.0.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
+    "autoprefixer": "^9.8.8",
+    "css-loader": "^6.8.1",
+    "cssnano": "^4.1.11",
+    "mini-css-extract-plugin": "^2.7.6",
+    "postcss": "^8.4.24",
+    "postcss-import": "^15.1.0",
+    "postcss-loader": "^7.3.3",
+    "tailwindcss": "^3.3.2",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4"
   }
 }
