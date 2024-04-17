@@ -1,12 +1,7 @@
-## Projects
 
-I like making things with code. Late at night, it's tools in the small: software to help me organize and manage my life.
+## Software
 
-During the day, it's tools in the large: I want to help solve coordination problems in this unprecedented technological age.
-
-### Software
-
-- [org-z](https://github.com/landakram/org-z) is an Emacs package for lightweight zettelkasten links in org-mode. Despite many experiments building personal knowledge management software, I keep coming back to Emacs org-mode for its power and breadth. It has everything, unfortunately obscured by a high learning curve. org-z supercharges org-mode with easy interactive search and linking.
+- [org-z](https://github.com/landakram/org-z) is an Emacs package for lightweight zettelkasten links in org-mode. Despite many experiments building personal knowledge management software, I keep coming back to Emacs org-mode for its power and breadth. org-z supercharges org-mode with easy interactive search and linking.
 - My [homelab](https://github.com/landakram/homelab) is an experiment in self-hosting software at home. I use it to run a prometheus cluster, store media, and participate in the decentralized web, among other things. It is primarily a private space to learn and play.
 - [Gridliner](https://gridliner.app) is a 3D outliner for freeform knowledge. While most outliners are 2-dimensional (up-down, in-out), Gridliner adds the left-right dimension, making it a hybrid outliner and spreadsheet.
 - [Serenity](https://serenity.markhudnall.com) is a peer-to-peer, drag-and-drop file sharing tool in the browser. After sharing a link with a friend, serenity directly connects your browsers using webrtc, providing an encrypted channel without intermediaries.
@@ -15,7 +10,7 @@ During the day, it's tools in the large: I want to help solve coordination probl
 
 I also maintain a handful of open source libraries. Best to look at [GitHub](https://github.com/landakram/) for these and other hidden gems.
 
-### Art
+## Art
 
 I like to make generative art, which I sometimes plot with a [HP-7550A](http://hpmuseum.net/display_item.php?hw=75) pen plotter. I open source most of my creations. I love lisp, so they are mostly written in clojure.
 
@@ -37,8 +32,8 @@ I like to make generative art, which I sometimes plot with a [HP-7550A](http://h
   </a>
 </div>
 
-### Older stuff
+## Older stuff
 
 - [Clef](https://web.archive.org/web/20161108070329/https://getclef.com/) was a better way to log in online. Twilio acquired our team in 2017.
 - [Instant2FA](https://www.producthunt.com/posts/instant-2fa) was a drop-in 2FA integration, built during the Clef days.
-- [gdax_recurring](https://github.com/landakram/gdax_recurring) is a CLI tool to automate recurring USD deposits and asset allocation for GDAX (now Coinbase Pro). It theoretically still works, but I haven't used it in years.
+- [hodl-cli](https://github.com/landakram/hodl-cli) is a CLI tool to automate recurring USD deposits and asset allocation for Coinbase Pro. It theoretically still works, but I haven't used it in years.
