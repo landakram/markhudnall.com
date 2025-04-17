@@ -1,12 +1,13 @@
 html, body {
-    @apply font-mono;
+    @apply font-sans;
     @apply text-base;
     background-color: #1d1f21;
     color: #c5c8c6;
+    font-size: 16px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    @apply font-mono;
+    @apply font-sans;
     @apply font-bold;
     /* margin-top: 2.75rem; */
     /* margin-bottom: 1.0rem; */
@@ -170,6 +171,7 @@ pre {
 
 code {
     font-family: 'fira-mono', menlo, monospace;
+    font-size: 14px;
     border-radius: 5px;
     border: solid 1px;
     padding-left: 0.10em;
