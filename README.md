@@ -9,8 +9,10 @@ Posts are written in markdown, turned into a static site using [stasis](https://
 If you want your *very own* copy of my personal website, you can clone it and build with: 
 
 ```shell
-make build
+bb build
 ```
+
+You will need to install [babashka](https://babashka.org/) to get `bb`.
 
 This also starts a local server with the production build at [localhost:3001](http://localhost:3001).
 

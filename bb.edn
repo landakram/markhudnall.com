@@ -1,0 +1,23 @@
+{:paths ["scripts"]
+ :deps {medley/medley {:mvn/version "1.3.0"}}
+ :min-bb-version "0.4.0"
+ :tasks
+ {:requires ([babashka.process :refer [process]])
+  clean (do
+          (shell "rm -rf resources/js/manifest.edn")
+          (shell "rm -rf resources/js/cljs-runtime")
+          (-> (shell {:out :string} "find resources/public/js" "-name" "*.js.map")
+              (shell  "xargs" "-r" "rm")))
+
+  build:css (shell "npm" "run" "build")
+  build:js (shell "npx" "shadow-cljs" "release" "app")
+  build:site (shell "lein run -m markhudnall.core/export")
+  build:open (shell "python3" "-m" "http.server" "--directory" "dist/" "3001")
+  -build {:depends [build:css build:js build:site]}
+  build (do (run 'clean)
+            (run '-build {:parallel true})
+            (run 'build:open))
+
+  run:js (shell "npx" "shadow-cljs" "watch" "app")
+  deploy (shell "git" "push" "dokku" "master")
+  }}
