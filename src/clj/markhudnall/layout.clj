@@ -32,7 +32,7 @@
 (defn layout-header []
   [:div.header.pointer-events.flex.flex-row.justify-between.items-center
     [:div.logo
-     [:a {:href "/"} [:img {:src "/img/logo-circle.png"}]]]
+     [:a {:href "/"} [:img {:src "/img/logo-tarot.svg"}]]]
     [:nav.navigation
       [:ul.space-x-half
         [:li

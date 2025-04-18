@@ -86,7 +86,7 @@
         [:rect {:key (str "x" x "y" y)
                 :width cell-size
                 :height cell-size
-                :fill "#C3C3C3"
+                :fill "#8a719e"
                 :x (* x cell-size)
                 :y (* y cell-size)}])])))
 
