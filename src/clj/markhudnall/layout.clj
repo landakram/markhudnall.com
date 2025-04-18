@@ -32,7 +32,7 @@
 (defn layout-header []
   [:div.header.pointer-events.flex.flex-row.justify-between.items-center
     [:div.logo
-     [:a {:href "/"} [:img {:src "/img/logo-circle.svg"}]]]
+     [:a {:href "/"} [:img {:src "/img/logo-circle.png"}]]]
     [:nav.navigation
       [:ul.space-x-half
         [:li
@@ -42,6 +42,12 @@
         [:li
           [:a {:href "/rss.xml"} "RSS"]]
         ]]])
+
+(defn layout-footer []
+  [:div.footer.flex.flex-col.justify-center.items-center.space-y-one
+   ;;[:div.separator.border-t.border-blue-200.opacity-25.w-full]
+   [:div.footer-logo
+    [:img {:src "/img/logo.png"}]]])
 
 (defn title-ify [title]
   (str title " | Mark Hudnall"))
@@ -69,11 +75,12 @@
      [:link {:rel "stylesheet" :href (link/file-path request "/css/main.css")}]]
     [:body
      [:div.life-canvas]
-     [:div.body.no-pointer-events.space-y-two.my-one.flex.flex-col.justify-center.mx-auto.p-one
+     [:div.body.no-pointer-events.my-one.flex.flex-col.justify-center.mx-auto.p-one
       (layout-header)
-      [:div.prose.content.pointer-events
+      [:div.prose.content.pointer-events.mt-two
        [:article
-        page]]]
+        page]]
+      (layout-footer)]
      (apply include-js js-includes)
      [:script "hljs.initHighlightingOnLoad();"]
      (inject-analytics)]))
