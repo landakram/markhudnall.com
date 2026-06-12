@@ -3,7 +3,9 @@
 (import ./command :as command)
 
 (defn short-sha [file]
-  (def out (command/capture! ["shasum" "-a" "256" file]))
+  (def out (command/capture! (if (os/which :macos)
+                               ["shasum" "-a" "256" file]
+                               ["sha256sum" file])))
   (string/slice out 0 12))
 
 (defn default-include? [rel]
