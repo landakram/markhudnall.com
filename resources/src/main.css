@@ -1,6 +1,6 @@
 @config "../../tailwind.config.js";
 @import "tailwindcss";
-@source inline("prose my-one flex flex-row flex-col justify-between justify-center items-center mx-auto mx-0 mx-4 p-one p-0 p-4 px-2 pointer-events no-pointer-events space-x-half space-y-one mt-two mt-2 mb-one mb-0 text-gray-600 text-yellow-300 bg-gray-700 border-2 border-solid border-yellow-300 opacity-70 inline-block italic list-none rounded-md shadow-md");
+@source inline("prose my-one flex flex-row flex-col justify-between justify-center items-center mx-auto mx-0 mx-4 p-one p-0 p-4 px-2 pointer-events no-pointer-events space-x-half space-y-one space-y-two mt-two mt-2 mb-one mb-0 text-gray-600 text-yellow-300 bg-gray-700 border-2 border-solid border-yellow-300 opacity-70 inline-block italic list-none rounded-md shadow-md");
 
 @import "./tomorrow-night-eighties.css";
 

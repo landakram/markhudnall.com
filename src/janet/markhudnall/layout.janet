@@ -68,9 +68,9 @@
       [:link {:rel "stylesheet" :href (assets/asset-url ctx "/css/main.css")}]]
      [:body
       [:div.life-canvas {:data-widget "life-background"}]
-      [:div.body.no-pointer-events.my-one.flex.flex-col.justify-center.mx-auto.p-one
+      [:div.body.no-pointer-events.space-y-two.my-one.flex.flex-col.justify-center.mx-auto.p-one
        (layout-header)
-       [:div.prose.content.pointer-events.mt-two
+       [:div.prose.content.pointer-events
         [:article page]]
        (layout-footer)]
       (script-tags ctx js-assets)

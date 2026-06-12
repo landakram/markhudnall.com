@@ -247,6 +247,40 @@ img.emoji {
     margin-top: 2em;
 }
 
+mjx-container[jax="CHTML"][display="true"] {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.25rem;
+}
+
+mjx-container[jax="CHTML"][display="true"] > mjx-math {
+    min-width: max-content;
+}
+
+.tippy-box {
+    max-width: calc(100vw - 2rem) !important;
+}
+
+.footnote-tooltip {
+    width: min(28rem, calc(100vw - 2rem));
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.footnote-tooltip p {
+    margin-bottom: 0;
+}
+
+.footnote-tooltip > :last-child {
+    margin-bottom: 0;
+}
+
+.footnote-tooltip a[href^="#fnref"] {
+    display: none;
+}
+
 .sketch {
     position: relative;
 }
