@@ -57,6 +57,8 @@
           [:span "▶"]]
          [canvas args]]))))
 
-(defn mount-root [args]
-  (dom/render [sketch args]
-              (.getElementById js/document (:host args))))
+(defn mount-root
+  ([args]
+   (mount-root (.getElementById js/document (:host args)) args))
+  ([el args]
+   (dom/render [sketch args] el)))

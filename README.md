@@ -2,41 +2,47 @@
 
 This is my personal website, [markhudnall.com](https://markhudnall.com).
 
-Posts are written in markdown, turned into a static site using [stasis](https://github.com/magnars/stasis), and deployed with [dokku](https://github.com/dokku/dokku) to a Digital Ocean droplet. I also use [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) to provide TLS certificates.
+Content is managed in Obsidian and turned into a static site with a small Janet static-site library in `src/janet/static_site`. Site-specific Janet code lives in `src/janet/markhudnall`, executable build entrypoints live in `bin`, and Markdown is rendered in Janet with [Remarkable](https://github.com/pyrmont/remarkable) plus an Obsidian-flavored Markdown layer for wiki links, embeds, comments, and callouts. Browser interactivity is still written in ClojureScript and compiled with Shadow CLJS. The site is deployed with [dokku](https://github.com/dokku/dokku) to a Digital Ocean droplet, with [dokku-letsencrypt](https://github.com/dokku/dokku-letsencrypt) providing TLS certificates.
 
 ## Usage
 
 If you want your *very own* copy of my personal website, you can clone it and build with: 
 
 ```shell
-bb build
+npm install
+jpm load-lockfile lockfile.jdn
+npm run build
 ```
 
-You will need to install [babashka](https://babashka.org/) to get `bb`.
+You will need [Janet](https://janet-lang.org/), `jpm`, Node/npm, and a Java runtime for Shadow CLJS. `jpm load-lockfile lockfile.jdn` installs the Janet dependencies globally, including Remarkable.
 
-This also starts a local server with the production build at [localhost:3001](http://localhost:3001).
+The build reads public notes from the Obsidian vault at `OBSIDIAN_VAULT`, defaulting to `/Users/mark/Documents/Obsidian/mh/mh`. Notes are private by default; add `publish: true` to publish. The exported note set is driven by an Obsidian Base file. Set `OBSIDIAN_PUBLISH_BASE` to a `.base` path, or use one of the default names such as `Website/Public.base`. See `docs/content.md` for the content contract.
+
+To serve the production build locally:
+
+```shell
+python3 -m http.server --directory dist/ 3001
+```
 
 If, for whatever reason, you then wanted to *deploy* my personal website on your own server, you could do so with dokku:
 
 ```shell
-# Assuming you already ran `make build`
 git remote add dokku dokku@your-dokku-host
 git push dokku master
 ```
 
-I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/methods/dockerfiles/) to deploy it. That's a little weird because it means dokku's nginx server is proxying to another nginx server behind docker, but there's too much cognitive overhead to deploying things, and it's worth it to me to deploy stuff in a uniform way.
+I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/methods/dockerfiles/) to deploy it. The Docker image builds `dist/` from source and a mounted Obsidian vault when the container starts, then serves it with nginx. See `docs/deploy.md` for the vault mount and sync setup.
 
 ## Developing
 
 Development is done in Emacs.
 
-1. Run `M-x cider-jack-in-clojurescript` with `shadow-cljs`.
-2. Run `M-x cider-jack-in` with `lein`. This will automatically start a development server at [localhost:3000](http://localhost:3000).
-3. Run `M-x compile` with `npm run dev`
+1. Run `npm run dev:js` for the Shadow CLJS watcher.
+2. Run `npm run dev:css` for the Tailwind CSS watcher.
+3. Run `npm run export` after content or Janet site-library changes.
 
 ## Why not use a static site generator? 
-
-I wanted to learn / write more Clojure. That's basically it.
+I wanted a site that is assembled from library pieces rather than a full framework. Originally that meant Clojure/Stasis; now it means a small Janet library with site-specific code layered on top.
 
 ## License
 

@@ -1,5 +1,5 @@
-{:source-paths ["src/clj" "src/cljs"]
- :dependencies [[org.clojure/core.async "1.3.610"]
+{:source-paths ["src/cljs"]
+ :dependencies [
                 [reagent "0.10.0"]
                 [quil "3.0.0"]
                 [prismatic/dommy "1.1.0"]]

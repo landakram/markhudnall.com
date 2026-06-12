@@ -1,12 +1,11 @@
 module.exports = {
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
   important: true,
-  purge: {
-    content: ['./**/*.clj', './**/*/*.cljs', './**/*/*.md'],
-  },
+  content: [
+    './resources/**/*.{css,md}',
+    './src/cljs/**/*.cljs',
+    './src/janet/**/*.janet',
+    './bin/**/*.janet'
+  ],
   theme: {
     fontFamily: {
       mono: ['fira-mono', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
@@ -73,12 +72,6 @@ module.exports = {
       },
     },
   },
-  variants: {
-    borderRadius: ['responsive', 'first', 'last'],
-    borderWidth: ['responsive', 'first', 'last'],
-    backgroundColor: ['responsive', 'hover', 'focus', 'active'],
-  },
   plugins: [
   ],
 }
-

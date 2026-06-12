@@ -1,7 +1,13 @@
 {
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development --watch"
+    "build": "janet bin/build.janet",
+    "build:css": "tailwindcss -i resources/src/main.css -o resources/public/css/main.css --minify",
+    "build:js": "sh -c 'if [ -z \"${JAVA_HOME:-}\" ] && [ -d /opt/homebrew/opt/openjdk ]; then export JAVA_HOME=/opt/homebrew/opt/openjdk; export PATH=\"$JAVA_HOME/bin:$PATH\"; fi; shadow-cljs release app'",
+    "export": "janet bin/export.janet",
+    "test": "janet bin/test.janet",
+    "obsidian:migrate": "janet bin/migrate-obsidian.janet",
+    "dev:css": "tailwindcss -i resources/src/main.css -o resources/public/css/main.css --watch",
+    "dev:js": "sh -c 'if [ -z \"${JAVA_HOME:-}\" ] && [ -d /opt/homebrew/opt/openjdk ]; then export JAVA_HOME=/opt/homebrew/opt/openjdk; export PATH=\"$JAVA_HOME/bin:$PATH\"; fi; shadow-cljs watch app'"
   },
   "dependencies": {
     "create-react-class": "^15.6.3",
@@ -11,15 +17,8 @@
     "tippy.js": "^6.2.7"
   },
   "devDependencies": {
-    "autoprefixer": "^9.8.8",
-    "css-loader": "^6.8.1",
-    "cssnano": "^4.1.11",
-    "mini-css-extract-plugin": "^2.7.6",
-    "postcss": "^8.4.24",
-    "postcss-import": "^15.1.0",
-    "postcss-loader": "^7.3.3",
-    "tailwindcss": "^3.3.2",
-    "webpack": "^5.87.0",
-    "webpack-cli": "^5.1.4"
+    "@tailwindcss/cli": "^4.2.4",
+    "shadow-cljs": "^3.4.6",
+    "tailwindcss": "^4.2.4"
   }
 }

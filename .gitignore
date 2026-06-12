@@ -1,4 +1,5 @@
 /target
+dist/
 /classes
 /checkouts
 pom.xml
@@ -32,6 +33,11 @@ repl/
 samplerepl/
 figwheel_server.log
 resources/public/js/main.js
+resources/public/js/manifest.edn
+resources/public/js/cljs-runtime
+.build/
+.pi/
+jpm_tree/
 .DS_Store
 .shadow-cljs
 node_modules
