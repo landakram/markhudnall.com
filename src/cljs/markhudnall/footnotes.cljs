@@ -14,9 +14,13 @@
         (doseq [c (-> footnote-el .-childNodes js/Array.from)]
           (.appendChild hover-note (.cloneNode c true)))
 
-        (tippy footnote-ref #js {:content hover-note
-                                 :interactive true
-                                 :arrow false
-                                 :duration #js [200 200]
-                                 :maxWidth 720
-                                 :allowHTML true})))))
+        (let [instance (tippy footnote-ref #js {:content hover-note
+                                                :interactive true
+                                                :arrow false
+                                                :duration #js [200 200]
+                                                :maxWidth 720
+                                                :allowHTML true})]
+          (.addEventListener footnote-ref "mouseover" (fn [_] (.show instance)))
+          (.addEventListener footnote-ref "focus" (fn [_] (.show instance)))
+          (.addEventListener footnote-ref "mouseleave" (fn [_] (.hide instance)))
+          (.addEventListener footnote-ref "blur" (fn [_] (.hide instance))))))))

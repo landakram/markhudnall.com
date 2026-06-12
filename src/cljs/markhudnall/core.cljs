@@ -6,7 +6,10 @@
 
 (defn mount-all! [selector mount!]
   (doseq [el (array-seq (.querySelectorAll js/document selector))]
-    (mount! el)))
+    (try
+      (mount! el)
+      (catch :default e
+        (.error js/console "Failed to mount widget" selector e)))))
 
 (defn init! []
   (mount-all! "[data-widget='life-background']" life/mount!)

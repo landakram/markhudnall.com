@@ -74,7 +74,22 @@
         [:article page]]
        (layout-footer)]
       (script-tags ctx js-assets)
-      [:script "hljs.initHighlightingOnLoad();"]
+      [:script "
+        (function () {
+          function highlightAll() {
+            if (!window.hljs) return;
+            var blocks = document.querySelectorAll('pre code');
+            Array.prototype.forEach.call(blocks, function (block) {
+              window.hljs.highlightBlock(block);
+            });
+          }
+
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', highlightAll);
+          } else {
+            highlightAll();
+          }
+        })();"]
       (inject-analytics)]]))
 
 (defn old-post-warning []
