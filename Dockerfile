@@ -1,7 +1,7 @@
 FROM node:24-alpine
 
-ENV OBSIDIAN_VAULT=/vault \
-    OBSIDIAN_PUBLISH_BASE=Website/Public.base
+ENV OBSIDIAN_SOURCE=snapshot \
+    OBSIDIAN_CONTENT_ROOT=content/public
 
 WORKDIR /app
 
@@ -21,7 +21,7 @@ COPY package.json package-lock.json project.janet lockfile.jdn ./
 RUN npm ci && jpm load-lockfile lockfile.jdn
 
 COPY . .
-RUN npm run build:js
+RUN npm run build
 
 EXPOSE 5000
 

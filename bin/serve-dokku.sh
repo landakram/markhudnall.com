@@ -1,14 +1,19 @@
 #!/bin/sh
 set -eu
 
-: "${OBSIDIAN_VAULT:=/vault}"
-: "${OBSIDIAN_PUBLISH_BASE:=Website/Public.base}"
+: "${OBSIDIAN_SOURCE:=snapshot}"
+: "${OBSIDIAN_CONTENT_ROOT:=content/public}"
 
-if [ ! -d "$OBSIDIAN_VAULT" ]; then
-  echo "OBSIDIAN_VAULT does not exist: $OBSIDIAN_VAULT" >&2
-  echo "Mount or sync the Obsidian vault before starting the app." >&2
+if [ ! -d "$OBSIDIAN_CONTENT_ROOT" ]; then
+  echo "Public content snapshot does not exist: $OBSIDIAN_CONTENT_ROOT" >&2
+  echo "Run npm run obsidian:export locally and commit the generated snapshot." >&2
   exit 1
 fi
 
-npm run build
+if [ ! -f dist/index.html ]; then
+  echo "Built site does not exist: dist/index.html" >&2
+  echo "The Docker image should run npm run build before startup." >&2
+  exit 1
+fi
+
 exec nginx -c /app/conf/nginx.conf

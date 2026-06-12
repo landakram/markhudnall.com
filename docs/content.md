@@ -1,8 +1,8 @@
 # Content
 
 Content lives in Obsidian and is selected for publishing by an Obsidian Base.
-The build reads the vault from `OBSIDIAN_VAULT`, defaulting to
-`/Users/mark/Documents/Obsidian/mh/mh`.
+The deployed build reads a committed public snapshot from `content/public`; it
+does not read or sync the full Obsidian vault.
 
 ## Publishing
 
@@ -22,6 +22,18 @@ filters:
       - file.inFolder("templates")
       - file.inFolder("_Templates")
 ```
+
+Export the public snapshot locally after changing published notes:
+
+```sh
+npm run obsidian:export
+```
+
+The exporter reads `OBSIDIAN_VAULT`, defaults to
+`/Users/mark/Documents/Obsidian/mh/mh`, evaluates the Base, validates the public
+content, and writes only selected notes plus referenced assets to
+`content/public`. Build from the live vault directly with
+`OBSIDIAN_SOURCE=vault npm run build` when debugging local content.
 
 ## Posts
 

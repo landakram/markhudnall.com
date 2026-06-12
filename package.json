@@ -5,6 +5,7 @@
     "build:js": "sh -c 'if [ -z \"${JAVA_HOME:-}\" ] && [ -d /opt/homebrew/opt/openjdk ]; then export JAVA_HOME=/opt/homebrew/opt/openjdk; export PATH=\"$JAVA_HOME/bin:$PATH\"; fi; shadow-cljs release app'",
     "export": "janet bin/export.janet",
     "test": "janet bin/test.janet",
+    "obsidian:export": "janet bin/export-obsidian.janet",
     "obsidian:migrate": "janet bin/migrate-obsidian.janet",
     "dev:css": "tailwindcss -i resources/src/main.css -o resources/public/css/main.css --watch",
     "dev:js": "sh -c 'if [ -z \"${JAVA_HOME:-}\" ] && [ -d /opt/homebrew/opt/openjdk ]; then export JAVA_HOME=/opt/homebrew/opt/openjdk; export PATH=\"$JAVA_HOME/bin:$PATH\"; fi; shadow-cljs watch app'"

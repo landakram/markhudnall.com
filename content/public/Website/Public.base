@@ -1,0 +1,17 @@
+filters:
+  and:
+    - publish == true
+    - not:
+      - file.inFolder("Templates")
+      - file.inFolder("templates")
+      - file.inFolder("_Templates")
+views:
+  - type: table
+    name: Public
+    order:
+      - file.name
+      - type
+      - title
+      - date
+      - slug
+      - website-role

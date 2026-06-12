@@ -1,15 +1,23 @@
 (import ../static_site/obsidian :as obsidian)
 (import ../static_site/obsidian_markdown :as obsidian-markdown)
+(import ../static_site/fs :as fs)
 (import ../static_site/path :as path)
 (import ./date :as date)
 
 (def default-vault "/Users/mark/Documents/Obsidian/mh/mh")
+(def default-content-root "content/public")
+
+(defn keyword-value [v]
+  (keyword (string/ascii-lower (string/replace-all "_" "-" (string v)))))
 
 (defn vault-path []
   (or (os/getenv "OBSIDIAN_VAULT") default-vault))
 
-(defn keyword-value [v]
-  (keyword (string/ascii-lower (string/replace-all "_" "-" (string v)))))
+(defn content-root-path []
+  (or (os/getenv "OBSIDIAN_CONTENT_ROOT") default-content-root))
+
+(defn content-source []
+  (keyword-value (or (os/getenv "OBSIDIAN_SOURCE") "snapshot")))
 
 (defn content-kind [note]
   (def metadata (get note :metadata @{}))
@@ -138,10 +146,9 @@
   (when (not (empty? errors))
     (error (string "Content validation failed:\n- " (string/join errors "\n- ")))))
 
-(defn load-content [directive-handlers]
-  (def vault (vault-path))
+(defn load-content-from-root [root directive-handlers]
   (def warnings @[])
-  (def scan (obsidian/scan-published vault))
+  (def scan (obsidian/scan-published root))
   (def raw-notes (get scan :notes))
   (def published (filter |(obsidian/published-for-query? (get scan :query) $) raw-notes))
   (validate-raw-notes! published)
@@ -157,7 +164,7 @@
   (validate-page-roles! roles)
   (each warning warnings
     (print (string "Obsidian warning: " warning)))
-  @{:vault vault
+  @{:root root
     :base-query (get scan :query)
     :notes notes
     :posts posts
@@ -165,3 +172,54 @@
     :pages-by-role roles
     :static-assets (all-static-assets notes)
     :warnings warnings})
+
+(defn load-content-from-vault [directive-handlers]
+  (load-content-from-root (vault-path) directive-handlers))
+
+(defn load-content-from-snapshot [directive-handlers]
+  (def root (content-root-path))
+  (when (not (fs/exists? root))
+    (error (string "Public content snapshot not found: " root
+                   "\nRun `npm run obsidian:export` locally, commit the snapshot, then build again.")))
+  (load-content-from-root root directive-handlers))
+
+(defn load-content [directive-handlers]
+  (case (content-source)
+    :vault (load-content-from-vault directive-handlers)
+    :snapshot (load-content-from-snapshot directive-handlers)
+    (error (string "Unknown OBSIDIAN_SOURCE: " (os/getenv "OBSIDIAN_SOURCE")
+                   "\nExpected `snapshot` or `vault`."))))
+
+(defn copy-relative-file [src-root dest-root file]
+  (def rel (path/relative src-root file))
+  (fs/copy-file file (path/join dest-root rel))
+  rel)
+
+(defn copy-snapshot-asset [snapshot-root seen asset]
+  (def source (get asset :source))
+  (def name (path/basename source))
+  (when-let [existing (get seen name)]
+    (when (not= existing source)
+      (error (string "Cannot export public snapshot: multiple assets named " name
+                     "\n- " existing
+                     "\n- " source))))
+  (put seen name source)
+  (fs/copy-file source (path/join snapshot-root "Attachments" "Website" name)))
+
+(defn export-public-snapshot [directive-handlers]
+  (def vault (vault-path))
+  (def snapshot-root (content-root-path))
+  (def content (load-content-from-root vault directive-handlers))
+  (fs/remove-tree snapshot-root)
+  (fs/ensure-dir snapshot-root)
+  (when-let [base-file (get-in content [:base-query :source])]
+    (copy-relative-file vault snapshot-root base-file))
+  (each note (get content :notes)
+    (copy-relative-file vault snapshot-root (get note :source)))
+  (def seen-assets @{})
+  (each asset (get content :static-assets @[])
+    (copy-snapshot-asset snapshot-root seen-assets asset))
+  (print (string "Exported public Obsidian snapshot to " snapshot-root))
+  (print (string "  notes: " (length (get content :notes))))
+  (print (string "  assets: " (length (get content :static-assets @[]))))
+  content)

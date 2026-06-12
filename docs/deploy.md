@@ -1,49 +1,35 @@
 # Deploy
 
-The Docker image builds the site from source when the container starts, then
-serves `dist/` with nginx. This means generated `dist/` output does not need to
-be committed.
+The Docker image builds the site from source using the committed public content
+snapshot, then serves `dist/` with nginx. This means generated `dist/` output
+does not need to be committed and the remote server does not need access to the
+full Obsidian vault.
 
-The container needs the Obsidian vault available at runtime. By default it reads:
+Before deploying, refresh and commit the public snapshot locally:
 
 ```sh
-OBSIDIAN_VAULT=/vault
-OBSIDIAN_PUBLISH_BASE=Website/Public.base
+npm run obsidian:export
+git add content/public
+git commit -m "Publish content"
 ```
 
 ## Dokku Setup
 
-Create persistent storage for the vault on the Dokku host and mount it into the
-app:
-
-```sh
-dokku storage:ensure-directory markhudnall-vault
-dokku storage:mount markhudnall.com /var/lib/dokku/data/storage/markhudnall-vault:/vault
-dokku config:set markhudnall.com OBSIDIAN_VAULT=/vault OBSIDIAN_PUBLISH_BASE=Website/Public.base
-```
-
-Sync the local Obsidian vault to that storage before deploying:
-
-```sh
-rsync -az --delete ~/Documents/Obsidian/mh/mh/ dokku@YOUR_HOST:/var/lib/dokku/data/storage/markhudnall-vault/
-```
-
-Then deploy source as usual:
+Deploy source as usual:
 
 ```sh
 git push dokku master
 ```
 
-On startup, the container runs `npm run build` against the mounted vault and then
-starts nginx on port `5000`.
+During image build, Docker runs `npm run build` against `content/public`. On
+startup, the container verifies `dist/index.html` exists and starts nginx on port
+`5000`.
 
 ## Local Docker Test
 
 ```sh
 docker build -t markhudnall.com .
-docker run --rm -p 5000:5000 \
-  -v ~/Documents/Obsidian/mh/mh:/vault:ro \
-  markhudnall.com
+docker run --rm -p 5000:5000 markhudnall.com
 ```
 
 Open <http://127.0.0.1:5000/>.

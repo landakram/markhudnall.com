@@ -16,7 +16,7 @@ npm run build
 
 You will need [Janet](https://janet-lang.org/), `jpm`, Node/npm, and a Java runtime for Shadow CLJS. `jpm load-lockfile lockfile.jdn` installs the Janet dependencies globally, including Remarkable.
 
-The build reads public notes from the Obsidian vault at `OBSIDIAN_VAULT`, defaulting to `/Users/mark/Documents/Obsidian/mh/mh`. Notes are private by default; add `publish: true` to publish. The exported note set is driven by an Obsidian Base file. Set `OBSIDIAN_PUBLISH_BASE` to a `.base` path, or use one of the default names such as `Website/Public.base`. See `docs/content.md` for the content contract.
+The build reads public notes from the committed snapshot at `content/public`. Notes are private by default in Obsidian; add `publish: true` to publish, then run `npm run obsidian:export` locally to refresh the snapshot. The exported note set is driven by an Obsidian Base file. Set `OBSIDIAN_PUBLISH_BASE` to a `.base` path, or use one of the default names such as `Website/Public.base`. See `docs/content.md` for the content contract.
 
 To serve the production build locally:
 
@@ -31,7 +31,7 @@ git remote add dokku dokku@your-dokku-host
 git push dokku master
 ```
 
-I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/methods/dockerfiles/) to deploy it. The Docker image builds `dist/` from source and a mounted Obsidian vault when the container starts, then serves it with nginx. See `docs/deploy.md` for the vault mount and sync setup.
+I use dokku's [Dockerfile support](http://dokku.viewdocs.io/dokku/deployment/methods/dockerfiles/) to deploy it. The Docker image builds `dist/` from source and the committed public content snapshot, then serves it with nginx. See `docs/deploy.md` for the deploy flow.
 
 ## Developing
 
@@ -39,7 +39,8 @@ Development is done in Emacs.
 
 1. Run `npm run dev:js` for the Shadow CLJS watcher.
 2. Run `npm run dev:css` for the Tailwind CSS watcher.
-3. Run `npm run export` after content or Janet site-library changes.
+3. Run `npm run obsidian:export` after publishing content in Obsidian.
+4. Run `npm run export` after Janet site-library changes.
 
 ## Why not use a static site generator? 
 I wanted a site that is assembled from library pieces rather than a full framework. Originally that meant Clojure/Stasis; now it means a small Janet library with site-specific code layered on top.
